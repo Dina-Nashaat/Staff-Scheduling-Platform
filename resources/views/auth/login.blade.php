@@ -29,7 +29,7 @@
     <div class=" text-center loginscreen animated fadeInDown">
         <div>
             <div>
-                <img src="{{asset('/')}}assets/dist/img/Logo.png">
+                <img style="width: 238px; height: 67px;" src="{{asset('/')}}assets/dist/img/logo-british-council-color.png">
             </div>
             <h1>Have to a good day</h1>
             <div class="middle-box">
@@ -47,7 +47,7 @@
                     <div class="form-group">
                         <input type="password" name="user_password" class="form-control" placeholder="Password" required="">
                     </div>
-                    <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
+                    <button type="submit" class="btn btn-success block full-width m-b">Login</button>
                     <a href="#"><small>Forgot password?</small></a>
                 </form>
             </div>
