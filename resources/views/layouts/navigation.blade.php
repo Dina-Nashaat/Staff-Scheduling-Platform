@@ -11,6 +11,7 @@
                         </span>
                     </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li><a href="#">Profile</a></li>
                         <li><a href="#">Logout</a></li>
                     </ul>
                 </div>
@@ -18,8 +19,8 @@
                     IN+
                 </div>
             </li>
-            <li class="{{ isActiveRoute('main') }}">
-                <a href="{{ url('/') }}"><i class="fa fa-th-large"></i> <span class="nav-label">Main view</span></a>
+            <li class="{{ isActiveRoute('home') }}">
+                <a href="{{ url('/home') }}"><i class="fa fa-home" aria-hidden="true"></i> <span class="nav-label">Home</span></a>
             </li>
             <li class="{{ isActiveRoute('minor') }}">
                 <a href="{{ url('/minor') }}"><i class="fa fa-th-large"></i> <span class="nav-label">Minor view</span> </a>
