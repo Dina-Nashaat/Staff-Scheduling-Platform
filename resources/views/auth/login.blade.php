@@ -31,7 +31,7 @@
             <div>
                 <img src="{{asset('/')}}assets/dist/img/Logo.png">
             </div>
-            <h1>Have to a new day</h1>
+            <h1>Have to a good day</h1>
             <div class="middle-box">
                 @if(Session::has('success'))
                     <p class="text-success">{!! Session::get('success') !!}</p>
