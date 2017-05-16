@@ -11,7 +11,33 @@
 |
 */
 
-Route::get('/', 'Auth\LoginController@index')->name("login");
+Route::group(['middleware' => 'guest'], function() {
 
-Route::get('/home', 'HomeController@index')->name("main");
-Route::get('/minor', 'HomeController@minor')->name("minor");
+	Route::get('/', [
+		'as' => 'main',
+		'uses' =>'Auth\LoginController@showLoginForm'
+	]);
+
+	Route::get('/login', [
+		'as' => 'login',
+		'uses' =>'Auth\LoginController@showLoginForm'
+	]);
+
+	Route::post('/login', [
+		'as' => 'login.submit',
+		'uses' =>'Auth\LoginController@login'
+	]);
+
+});
+
+
+Route::group(['middleware' => 'auth'], function() {
+
+	Route::get('/home', [
+		'as' => 'home',
+		'uses' => 'HomeController@index'
+	]);
+
+	Route::get('/minor', 'HomeController@minor')->name("minor");
+
+});

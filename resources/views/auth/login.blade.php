@@ -39,13 +39,13 @@
                 @if(Session::has('failure'))
                     <p class="text-danger">{!! Session::get('failure') !!}</p>
                 @endif
-                <form class="m-t" role="form" method="post"">
+                <form class="m-t" role="form" method="post" action="{{ route('login.submit') }}">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" >
                     <div class="form-group">
-                        <input type="email" name="user_email" class="form-control" placeholder="email" required="">
+                        <input type="email" name="email" class="form-control" placeholder="email" required="">
                     </div>
                     <div class="form-group">
-                        <input type="password" name="user_password" class="form-control" placeholder="Password" required="">
+                        <input type="password" name="password" class="form-control" placeholder="Password" required="">
                     </div>
                     <button type="submit" class="btn btn-success block full-width m-b">Login</button>
                     <a href="#"><small>Forgot password?</small></a>
