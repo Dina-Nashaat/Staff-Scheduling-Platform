@@ -7,12 +7,32 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="text-center m-t-lg">
-                            <h1>
-                                Welcome in INSPINIA Laravel Starter Project
-                            </h1>
-                            <small>
-                                It is an application skeleton for a typical web app. You can use it to quickly bootstrap your webapp projects.
-                            </small>
+                            <div class="table-responsive white-bg">
+                            <table class="table table-striped table-hover datatables" >
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Center</th>
+                                        <th>State</th>
+                                        <th class="hide"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($users as $user)
+                                    <tr>
+                                        <td>{{ $user->firstname }} {{ $user->lastname }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>{{ $user->state }}</td>
+                                        <td><a href="#">Edit</a></td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                         </div>
                     </div>
                 </div>

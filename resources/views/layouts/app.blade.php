@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="{!! asset('css/vendor.css') !!}" />
     <link rel="stylesheet" href="{!! asset('css/app.css') !!}" />
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js">
 
 </head>
 <body>
@@ -37,6 +38,7 @@
     <!-- End wrapper-->
 
 <script src="{!! asset('js/app.js') !!}" type="text/javascript"></script>
+<script src="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" type="text/javascript"></script>
 
 @section('scripts')
 @show
