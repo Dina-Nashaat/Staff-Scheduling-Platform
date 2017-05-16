@@ -33,6 +33,11 @@ Route::group(['middleware' => 'guest'], function() {
 
 Route::group(['middleware' => 'auth'], function() {
 
+	Route::get('/logout', [
+		'as' => 'logout',
+		'uses' => 'Auth\LoginController@logout',
+	]);
+
 	Route::get('/home', [
 		'as' => 'home',
 		'uses' => 'HomeController@index'
