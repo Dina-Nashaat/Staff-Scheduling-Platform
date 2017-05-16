@@ -48,6 +48,16 @@ Route::group(['middleware' => 'auth'], function() {
 		'uses' => 'UsersController@index',
 	]);
 
+	Route::get('/users/create', [
+		'as' => 'users.create',
+		'uses' => 'UsersController@create',
+	]);
+
+	Route::post('/users/store', [
+		'as' => 'users.store',
+		'uses' => 'UsersController@store',
+	]);
+
 	Route::get('/minor', 'HomeController@minor')->name("minor");
 
 });

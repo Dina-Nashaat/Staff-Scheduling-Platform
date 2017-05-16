@@ -22,7 +22,7 @@
             <li class="{{ isActiveRoute('home') }}">
                 <a href="{{ url('/home') }}"><i class="fa fa-home" aria-hidden="true"></i> <span class="nav-label">Home</span></a>
             </li>
-            <li class="{{ isActiveRoute('users') }}">
+            <li class="{{ isActiveRoute('users') }} {{ isActiveRoute('users.create') }}">
                 <a href="{{ url('/users') }}"><i class="fa fa-user" aria-hidden="true"></i> <span class="nav-label">Users Managment</span></a>
             </li>
             <li class="{{ isActiveRoute('minor') }}">
