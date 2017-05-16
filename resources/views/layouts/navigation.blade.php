@@ -22,6 +22,9 @@
             <li class="{{ isActiveRoute('home') }}">
                 <a href="{{ url('/home') }}"><i class="fa fa-home" aria-hidden="true"></i> <span class="nav-label">Home</span></a>
             </li>
+            <li class="{{ isActiveRoute('users') }}">
+                <a href="{{ url('/users') }}"><i class="fa fa-user" aria-hidden="true"></i> <span class="nav-label">Users Managment</span></a>
+            </li>
             <li class="{{ isActiveRoute('minor') }}">
                 <a href="{{ url('/minor') }}"><i class="fa fa-th-large"></i> <span class="nav-label">Minor view</span> </a>
             </li>

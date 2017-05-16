@@ -43,6 +43,11 @@ Route::group(['middleware' => 'auth'], function() {
 		'uses' => 'HomeController@index'
 	]);
 
+	Route::get('/users', [
+		'as' => 'users',
+		'uses' => 'UsersController@index',
+	]);
+
 	Route::get('/minor', 'HomeController@minor')->name("minor");
 
 });
