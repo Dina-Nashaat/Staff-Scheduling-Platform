@@ -61,48 +61,53 @@
                         type: "POST",
                         dataType: "json",
                         success: function(output) {
-                            console.log(output);
-                            alert(Date);
-                            alert('Added Successfully');
+                            eventData.id = output;
+                            $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+                            console.log('Added Successfully');
                         }
                     });
-					$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+                    
+					
 				}   
 				$('#calendar').fullCalendar('unselect');
         },
         
         eventDrop: function(event, delta) {
-        startTime = $.fullCalendar.formatDate(event.start, 'hh:mm:ss');
-        endTime = $.fullCalendar.formatDate(event.end, 'hh:mm:ss');
+        var Date = $.fullCalendar.formatDate(event.start, 'YYYY-MM-D');
+        var startTime = $.fullCalendar.formatDate(event.start, 'hh:mm:ss');
+        var endTime = $.fullCalendar.formatDate(event.end, 'hh:mm:ss');
 
         $.ajax({
-            url: 'availability/update',
-            data: 'title='+ event.title+'&start='+ startTime +'&end='+ endTime +'&id='+ event.id + '&_token=' + _token,
-            type: "POST",
-            success: function(json) {
-                console.log(json);
-                alert("Updated Successfully");
-            }
+                url: 'availability/update',
+                data: 'title='+ event.title+'&startTime='+ startTime +'&endTime='+ endTime + '&Date=' + Date + '&id=' + event.id +'&_token=' + _token ,
+                type: "POST",
+                dataType: "json",
+                success: function(output) {
+                    eventData.id = output;
+                    console.log('Updated Successfully');
+                }
         });
         },
         
         eventResize: function(event) {
-            
-        startTime = $.fullCalendar.formatDate(event.start, 'hh:mm:ss');
-        endTime = $.fullCalendar.formatDate(event.end, 'hh:mm:ss');
+        var Date = $.fullCalendar.formatDate(event.start, 'YYYY-MM-D');
+        var startTime = $.fullCalendar.formatDate(event.start, 'hh:mm:ss');
+        var endTime = $.fullCalendar.formatDate(event.end, 'hh:mm:ss');
 
-            $.ajax({
+           $.ajax({
                 url: 'availability/update',
-                data: 'title='+ event.title+'&start='+ startTime +'&end='+ endTime +'&id='+ event.id + '&_token=' + _token,
+                data: 'title='+ event.title+'&startTime='+ startTime +'&endTime='+ endTime + '&Date=' + Date + '&id=' + event.id +  '&_token=' + _token,
                 type: "POST",
-                success: function(json) {
-                    console.log(json);
-                    alert("Updated Successfully");
+                dataType: "json",
+                success: function(output) {
+                    eventData.id = output;
+                    console.log(eventData.id);
+                    console.log('updated Successfully');
                 }
             });
         }
         });
-        });
+    });
 
         
     </script>

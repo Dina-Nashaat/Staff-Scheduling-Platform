@@ -14,7 +14,17 @@ class availabilityController extends Controller
         $data['date'] = $input['Date'];
         $data['start_time'] = $input['startTime'];
         $data['end_time'] = $input['endTime'];
-        Availability::create($data);
-        return $data;
+        $availability = Availability::create($data);
+        return $availability->id;
+    }
+
+    function update()
+    {
+        $input = Request::all();
+        $availability = Availability::find($input['id']);
+        $data['date'] = $input['Date'];
+        $data['start_time'] = $input['startTime'];
+        $data['end_time'] = $input['endTime'];
+        $availability->update($data);
     }
 }
