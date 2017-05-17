@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Main page')
+@section('title', 'Create User')
 
 @section('content')
     <div class="row">
@@ -21,8 +21,53 @@
                                     <input type="text" name="firstname" placeholder="first name" value="{{ old('firstname') }}">
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Last Name</label>
+                                    <input type="text" name="lastname" placeholder="last name" value="{{ old('lastname') }}">
+                                </div>
+                            </div>
                         </div>
-                    </div>                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" name="email" placeholder="Email" value="{{ old('email') }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Birthdate</label>
+                                    <input type="date" name="birthdate" placeholder="Birthdate" value="{{ old('birthdate') }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input type="password" name="password" placeholder="Password" value="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Confirm Password</label>
+                                    <input type="password" name="password_confirmation" placeholder="Password" value="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <button type="submit">Create</button>
+                            </div>
+                        </div>
+                    </div>                
                 </div>
             </form>
         </div>
