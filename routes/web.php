@@ -51,9 +51,14 @@ Route::group(['middleware' => 'auth'], function() {
 
 	Route::post('/availability/post', [
 	'as' => 'availability.post',
-	'uses' => 'HomeController@postAvailability'
+	'uses' => 'AvailabilityController@store'
 	]);
-	
+
+	Route::post('/availability/update', [
+	'as' => 'availability.update',
+	'uses' => 'HomeController@updateAvailability'
+	]);
+
 	Route::get('/users', [
 		'as' => 'users',
 		'uses' => 'UsersController@index',

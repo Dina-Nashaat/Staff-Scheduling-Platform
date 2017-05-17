@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Request;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -22,7 +23,11 @@ class HomeController extends Controller
     public function postAvailability(Request $request)
     {
         $input = Request::all();
-        dd($input);
+        return $input;
+    }
+    public function updateAvailability(Request $request)
+    {
+        $input = Request::all();
         return $input;
     }
 }
