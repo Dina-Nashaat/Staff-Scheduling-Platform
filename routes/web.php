@@ -42,7 +42,11 @@ Route::group(['middleware' => 'auth'], function() {
 		'as' => 'home',
 		'uses' => 'HomeController@index'
 	]);
-
+	
+	Route::get('/availability', [
+	'as' => 'availability',
+	'uses' => 'HomeController@getAvailability'
+	]);
 	Route::get('/users', [
 		'as' => 'users',
 		'uses' => 'UsersController@index',

@@ -13,4 +13,8 @@ class HomeController extends Controller
     {
         return view('home/minor');
     }
+    public function getAvailability()
+    {
+        return view('home/availability');
+    }
 }

@@ -25,8 +25,8 @@
             <li class="{{ isActiveRoute('users') }} {{ isActiveRoute('users.create') }}">
                 <a href="{{ url('/users') }}"><i class="fa fa-user" aria-hidden="true"></i> <span class="nav-label">Users Managment</span></a>
             </li>
-            <li class="{{ isActiveRoute('minor') }}">
-                <a href="{{ url('/minor') }}"><i class="fa fa-th-large"></i> <span class="nav-label">Availabilty</span> </a>
+            <li class="{{ isActiveRoute('availability') }}">
+                <a href="{{ url('/availability') }}"><i class="fa fa-th-large"></i> <span class="nav-label">Availabilty</span> </a>
             </li>
         </ul>
 
