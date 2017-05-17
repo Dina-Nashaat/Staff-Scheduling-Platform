@@ -48,6 +48,11 @@ Route::group(['middleware' => 'auth'], function() {
 	'as' => 'availability',
 	'uses' => 'HomeController@getAvailability'
 	]);
+	
+	Route::get('/adminviewavailability', [
+	'as' => 'adminviewavailability',
+	'uses' => 'HomeController@adminViewAvailability'
+	]);
 
 	Route::post('/availability/post', [
 	'as' => 'availability.post',

@@ -4,7 +4,7 @@
     <link rel='stylesheet' href='fullcalendar/fullcalendar.css' />
 @endsection
 
-@section('title', 'Main page')
+@section('title', 'Availability')
 
 @section('content')
     <div class="wrapper wrapper-content animated fadeInRight">

@@ -28,6 +28,9 @@
             <li class="{{ isActiveRoute('availability') }}">
                 <a href="{{ url('/availability') }}"><i class="fa fa-th-large"></i> <span class="nav-label">Availabilty</span> </a>
             </li>
+			<li class="{{ isActiveRoute('adminviewavailability') }}">
+                <a href="{{ url('/adminviewavailability') }}"><i class="fa fa-th-large"></i> <span class="nav-label">View Availabilty</span> </a>
+            </li>
         </ul>
 
     </div>

@@ -19,6 +19,11 @@ class HomeController extends Controller
     {
         return view('home/availability');
     }
+	
+	public function adminViewAvailability()
+    {
+        return view('home/adminViewAvailability');
+    }
 
     public function postAvailability(Request $request)
     {
