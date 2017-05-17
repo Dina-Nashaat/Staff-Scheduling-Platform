@@ -43,28 +43,63 @@
             contentHeight: "auto",
             editable: true,
             selectable: true,
+		
             select: function(start, end) {
 				var title = 'Available';
-				var eventData;
 				if (title) {
 					eventData = {
 						title: title,
 						start: start,
-						end: end
+						end: end,
 					};
+                    var Date = $.fullCalendar.formatDate(eventData.start, 'YYYY-MM-D');
+                    var startTime = $.fullCalendar.formatDate(eventData.start, 'hh:mm:ss');
+                    var endTime = $.fullCalendar.formatDate(eventData.end, 'hh:mm:ss');
                     $.ajax({
                         url: 'availability/post',
-                        data: 'title='+ title+'&start='+ start +'&end='+ end + '&_token=' + _token,
+                        data: 'title='+ title+'&startTime='+ startTime +'&endTime='+ endTime + '&Date=' + Date + '&_token=' + _token,
                         type: "POST",
                         dataType: "json",
                         success: function(output) {
-                            console.log(output['title']);
+                            console.log(output);
+                            alert(Date);
                             alert('Added Successfully');
                         }
                     });
 					$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
 				}   
 				$('#calendar').fullCalendar('unselect');
+        },
+        
+        eventDrop: function(event, delta) {
+        startTime = $.fullCalendar.formatDate(event.start, 'hh:mm:ss');
+        endTime = $.fullCalendar.formatDate(event.end, 'hh:mm:ss');
+
+        $.ajax({
+            url: 'availability/update',
+            data: 'title='+ event.title+'&start='+ startTime +'&end='+ endTime +'&id='+ event.id + '&_token=' + _token,
+            type: "POST",
+            success: function(json) {
+                console.log(json);
+                alert("Updated Successfully");
+            }
+        });
+        },
+        
+        eventResize: function(event) {
+            
+        startTime = $.fullCalendar.formatDate(event.start, 'hh:mm:ss');
+        endTime = $.fullCalendar.formatDate(event.end, 'hh:mm:ss');
+
+            $.ajax({
+                url: 'availability/update',
+                data: 'title='+ event.title+'&start='+ startTime +'&end='+ endTime +'&id='+ event.id + '&_token=' + _token,
+                type: "POST",
+                success: function(json) {
+                    console.log(json);
+                    alert("Updated Successfully");
+                }
+            });
         }
         });
         });
