@@ -31,8 +31,9 @@ Route::group(['middleware' => 'guest'], function() {
 });
 
 
-Route::group(['middleware' => 'auth'], function() {
 
+Route::group(['middleware' => 'auth'], function() {
+	
 	Route::get('/logout', [
 		'as' => 'logout',
 		'uses' => 'Auth\LoginController@logout',
@@ -48,8 +49,8 @@ Route::group(['middleware' => 'auth'], function() {
 	'uses' => 'HomeController@getAvailability'
 	]);
 
-	Route::post('/availability', [
-	'as' => 'availability',
+	Route::post('/availability/post', [
+	'as' => 'availability.post',
 	'uses' => 'HomeController@postAvailability'
 	]);
 	

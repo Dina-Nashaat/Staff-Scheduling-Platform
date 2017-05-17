@@ -17,16 +17,12 @@ class HomeController extends Controller
     public function getAvailability()
     {
         return view('home/availability');
-    
     }
-    public function postAvailability()
+
+    public function postAvailability(Request $request)
     {
         $input = Request::all();
-        return $input;
-    }
-    public function trial()
-    {
-        $input = Request::all();
+        dd($input);
         return $input;
     }
 }

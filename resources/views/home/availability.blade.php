@@ -8,6 +8,7 @@
 
 @section('content')
     <div class="wrapper wrapper-content animated fadeInRight">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}" id="_token">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="text-center m-t-lg">
@@ -32,6 +33,7 @@
         
         $(document).ready(function() {
         // page is now ready, initialize the calendar...
+        var _token = $('#_token').val();
         $('#calendar').fullCalendar({
             defaultView: 'agendaWeek',
             minTime: "06:00:00",
@@ -50,11 +52,21 @@
 						start: start,
 						end: end
 					};
+                    $.ajax({
+                        url: 'availability/post',
+                        data: 'title='+ title+'&start='+ start +'&end='+ end + '&_token=' + _token,
+                        type: "POST",
+                        dataType: "json",
+                        success: function(output) {
+                            console.log(output['title']);
+                            alert('Added Successfully');
+                        }
+                    });
 					$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-				}
+				}   
 				$('#calendar').fullCalendar('unselect');
-			}
-        })
+        }
+        });
         });
 
         
