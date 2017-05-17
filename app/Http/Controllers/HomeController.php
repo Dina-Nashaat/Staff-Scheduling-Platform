@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Request;
 
 class HomeController extends Controller
 {
@@ -16,5 +17,16 @@ class HomeController extends Controller
     public function getAvailability()
     {
         return view('home/availability');
+    
+    }
+    public function postAvailability()
+    {
+        $input = Request::all();
+        return $input;
+    }
+    public function trial()
+    {
+        $input = Request::all();
+        return $input;
     }
 }

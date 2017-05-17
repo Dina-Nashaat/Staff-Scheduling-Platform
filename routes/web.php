@@ -47,6 +47,12 @@ Route::group(['middleware' => 'auth'], function() {
 	'as' => 'availability',
 	'uses' => 'HomeController@getAvailability'
 	]);
+
+	Route::post('/availability', [
+	'as' => 'availability',
+	'uses' => 'HomeController@postAvailability'
+	]);
+	
 	Route::get('/users', [
 		'as' => 'users',
 		'uses' => 'UsersController@index',
