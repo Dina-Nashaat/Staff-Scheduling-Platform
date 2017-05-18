@@ -12,7 +12,7 @@ class AvailabilityController extends Controller
     function store()
     {
         $input = Request::all();
-        $data['user_id'] = $input['userId'];
+        $data['user_id'] = Auth::user()->id;
         $data['date'] = $input['Date'];
         $data['start_time'] = $input['startTime'];
         $data['end_time'] = $input['endTime'];
@@ -33,7 +33,7 @@ class AvailabilityController extends Controller
     function fetch()
     {
         $user_id = Auth::user()->id;
-        $query = Availability::where('user_id',$user_id)->get();
+        $query = Availability::where('user_id', $user_id)->get();
         $data = [];
         foreach($query as $q)
         {
@@ -44,7 +44,7 @@ class AvailabilityController extends Controller
 
             $data[] = array('start'=>$start,
                             'end' =>$end,
-                            'title' => 'available', 
+                            'title' => 'Available', 
                             'id'=>$id);
         }
         return json_encode($data);
