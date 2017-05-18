@@ -69,6 +69,11 @@ Route::group(['middleware' => 'auth'], function() {
 		'uses' => 'AvailabilityController@fetch'
 	]);
 
+	Route::post('/availability/delete', [
+		'as' => 'availability.delete',
+		'uses' => 'AvailabilityController@delete'
+	]);
+
 	Route::get('/users', [
 		'as' => 'users',
 		'uses' => 'UsersController@index',

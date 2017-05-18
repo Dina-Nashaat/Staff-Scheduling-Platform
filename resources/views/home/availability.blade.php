@@ -105,7 +105,21 @@
                     console.log('updated Successfully');
                 }
             });
-        }
+        },
+        eventClick: function(calEvent, jsEvent, view) {
+               $.ajax({
+                url: 'availability/delete',
+                data: '&id=' + calEvent._id +  '&_token=' + _token,
+                type: "POST",
+                dataType: "json",
+                success: function(output) {
+                    console.log(calEvent._id);
+                    $('#calendar').fullCalendar('removeEvents', calEvent.id);
+                    console.log('Deleted Successfully');
+                    }});
+                 
+                //return event == calEvent;
+            },
         });
     });
 

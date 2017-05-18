@@ -47,7 +47,16 @@ class availabilityController extends Controller
                             'title' => 'available', 
                             'id'=>$id);
         }
-
         return json_encode($data);
     }
+
+    function delete()
+    {   
+        $input = Request::all();
+        $availability = Availability::find($input['id']);
+        $availability->delete();
+        return $availability;
+    }
+
 }   
+
