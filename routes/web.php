@@ -84,6 +84,26 @@ Route::group(['middleware' => 'auth'], function() {
 		'uses' => 'AvailabilityController@get',
 	]);
 
+	Route::get('/schedule', [
+		'as' => 'availability',
+		'uses' => 'ScheduleController@getSchedule'
+	]);
+
+	Route::post('/schedule/post', [
+		'as' => 'schedule.post',
+		'uses' => 'ScheduleController@store'
+	]);
+
+	Route::get('/schedule/fetch', [
+		'as' => 'schedule.fetch',
+		'uses' => 'ScheduleController@fetch'
+	]);
+
+	Route::post('/schedule/update', [
+		'as' => 'schedule.update',
+		'uses' => 'ScheduleController@update'
+	]);
+
 	Route::get('/users', [
 		'as' => 'users',
 		'uses' => 'UsersController@index',
