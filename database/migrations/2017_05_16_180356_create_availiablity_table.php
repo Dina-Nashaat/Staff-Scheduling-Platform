@@ -19,7 +19,8 @@ class CreateAvailiablityTable extends Migration
 			$table->date('date');
 			$table->time('start_time');
 			$table->time('end_time');
-			$table->decimal('total_hours');
+			$table->decimal('total_hours')->nullable();
+            $table->timestamps();
         });
     }
 

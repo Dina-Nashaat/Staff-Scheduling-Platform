@@ -7,7 +7,7 @@ use App\Availability;
 use Auth;
 use \Datetime;
 
-class availabilityController extends Controller
+class AvailabilityController extends Controller
 {
     function store()
     {
