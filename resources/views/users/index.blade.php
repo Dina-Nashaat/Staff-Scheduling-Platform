@@ -20,10 +20,10 @@
             <div class="col-lg-12">
                 <div class="text-center m-t-lg">
                     <div class="table-responsive white-bg">
-                    <table class="table table-striped table-hover datatables" >
+                    <table class="table table-striped table-hover datatables" > <style> td{text-align:left;} th{text-align:center;}}</style>
                         <thead>
                             <tr>
-                                <th>Name</th>
+                                <th >Name</th>
                                 <th>Email</th>
                                 <th>Role</th>
                                 <th>Center</th>
