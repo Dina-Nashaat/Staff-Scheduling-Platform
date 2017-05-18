@@ -64,17 +64,17 @@
                     var row = document.createElement('tr');
                     
                     var user = document.createElement('td');
-                    user.append(val.user_id);
+                    $(user).append(val.user_id);
                     
                     var start = document.createElement('td');
-                    start.append(val.start_time);
+                    $(start).append(val.start_time);
                     
                     var end = document.createElement('td');
-                    end.append(val.end_time);
+                    $(end).append(val.end_time);
                     
-                    row.append(user);
-                    row.append(start);
-                    row.append(end);
+                    $(row).append(user);
+                    $(row).append(start);
+                    $(row).append(end);
 
                     $("#table-body").append(row);
                 });
