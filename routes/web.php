@@ -64,6 +64,11 @@ Route::group(['middleware' => 'auth'], function() {
 		'uses' => 'AvailabilityController@update'
 	]);
 
+	Route::get('/availability/fetch', [
+		'as' => 'availability.fetch',
+		'uses' => 'AvailabilityController@fetch'
+	]);
+
 	Route::get('/users', [
 		'as' => 'users',
 		'uses' => 'UsersController@index',

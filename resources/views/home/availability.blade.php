@@ -43,7 +43,7 @@
             contentHeight: "auto",
             editable: true,
             selectable: true,
-		
+            events: '/availability/fetch',
             select: function(start, end) {
 				var title = 'Available';
 				if (title) {
@@ -55,15 +55,16 @@
                     var Date = $.fullCalendar.formatDate(eventData.start, 'YYYY-MM-D');
                     var startTime = $.fullCalendar.formatDate(eventData.start, 'hh:mm:ss');
                     var endTime = $.fullCalendar.formatDate(eventData.end, 'hh:mm:ss');
+                    var userId = {{Auth::user()->id}};
                     $.ajax({
                         url: 'availability/post',
-                        data: 'title='+ title+'&startTime='+ startTime +'&endTime='+ endTime + '&Date=' + Date + '&_token=' + _token,
+                        data: 'title='+ title+'&startTime='+ startTime +'&endTime='+ endTime + '&Date=' + Date + '&userId=' + userId +'&_token=' + _token,
                         type: "POST",
                         dataType: "json",
                         success: function(output) {
                             eventData.id = output;
                             $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-                            console.log('Added Successfully');
+                            console.log('Added Successfully for user');
                         }
                     });
                     
@@ -101,7 +102,6 @@
                 dataType: "json",
                 success: function(output) {
                     eventData.id = output;
-                    console.log(eventData.id);
                     console.log('updated Successfully');
                 }
             });

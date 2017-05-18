@@ -24,15 +24,4 @@ class HomeController extends Controller
     {
         return view('home/adminViewAvailability');
     }
-
-    public function postAvailability(Request $request)
-    {
-        $input = Request::all();
-        return $input;
-    }
-    public function updateAvailability(Request $request)
-    {
-        $input = Request::all();
-        return $input;
-    }
 }
