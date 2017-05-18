@@ -41,7 +41,7 @@ class ScheduleController extends Controller
         return json_encode($data);
     }
 
-     function update()
+    function update()
     {
         $input = Request::all();
         $schedule = Schedule::find($input['id']);
@@ -51,9 +51,18 @@ class ScheduleController extends Controller
         $schedule->update($data);
     }
         
-     public function getSchedule()
+    public function getSchedule()
     {
         return view('home/schedule');
     }
+
+    function delete()
+    {   
+        $input = Request::all();
+        $schedule = Schedule::find($input['id']);
+        $schedule->delete();
+        return $schedule;
+    }
+
 	
 }
