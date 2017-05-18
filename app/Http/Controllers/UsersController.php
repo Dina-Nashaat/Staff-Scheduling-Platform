@@ -34,7 +34,7 @@ class UsersController extends Controller
 			$data['state'] = 'active';
 			$data['password'] = bcrypt($data['password']);
 			$data['center_id'] = 1;
-			$data['role_id'] = 1;
+			$data['role_id'] = 2;
 
 			User::create($data);
 
@@ -43,5 +43,5 @@ class UsersController extends Controller
         	return redirect()->back()->withInput()->with('message', 'User has not been added, Try again!');
       }
 
-    }
+    }	
 }

@@ -48,11 +48,6 @@ Route::group(['middleware' => 'auth'], function() {
 		'as' => 'availability',
 		'uses' => 'HomeController@getAvailability'
 	]);
-	
-	Route::get('/adminviewavailability', [
-	'as' => 'adminviewavailability',
-	'uses' => 'HomeController@adminViewAvailability'
-	]);
 
 	Route::post('/availability/post', [
 		'as' => 'availability.post',
@@ -72,6 +67,21 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('/availability/delete', [
 		'as' => 'availability.delete',
 		'uses' => 'AvailabilityController@delete'
+	]);
+
+	Route::get('/availability/view', [
+		'as' => 'availability.view',
+		'uses' => 'AvailabilityController@view',
+	]);
+
+	Route::get('/availability/get', [
+		'as' => 'availability.get',
+		'uses' => 'AvailabilityController@get',
+	]);
+
+	Route::post('/availability/get', [
+		'as' => 'availability.post',
+		'uses' => 'AvailabilityController@get',
 	]);
 
 	Route::get('/users', [

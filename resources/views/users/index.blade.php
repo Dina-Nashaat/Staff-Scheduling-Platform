@@ -36,10 +36,10 @@
                             <tr>
                                 <td>{{ $user->firstname }} {{ $user->lastname }}</td>
                                 <td>{{ $user->email }}</td>
+                                <td style="text-align:center;">{{ $user->role_id}}</td>
                                 <td></td>
-                                <td></td>
-                                <td>{{ $user->state }}</td>
-                                <td><a href="#">Edit</a></td>
+                                <td style="text-align:center;">{{ $user->state }}</td>
+                                <td style="text-align:right;"><a href="#">Edit</a></td>
                             </tr>
                         @endforeach
                         </tbody>
