@@ -6,8 +6,8 @@
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <span class="clear">
                             <span class="block m-t-xs">
-                                <strong class="font-bold">Example user</strong>
-                            </span> <span class="text-muted text-xs block">Example menu <b class="caret"></b></span>
+                                <strong class="font-bold">{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</strong>
+                            </span> <span class="text-muted text-xs block">Menu <b class="caret"></b></span>
                         </span>
                     </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
@@ -26,12 +26,14 @@
                 <a href="{{ url('/users') }}"><i class="fa fa-user" aria-hidden="true"></i> <span class="nav-label">Users Managment</span></a>
             </li>
             <li class="{{ isActiveRoute('availability') }}">
-                <a href="{{ url('/availability') }}"><i class="fa fa-th-large"></i> <span class="nav-label">Availabilty</span> </a>
+                <a href="{{ url('/availability') }}"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> <span class="nav-label">Availabilty</span> </a>
             </li>
             <li class="{{ isActiveRoute('availability.view') }}">
-                <a href="{{ url('/availability/view') }}"><i class="fa fa-th-large"></i> <span class="nav-label">View Availabilty</span> </a>
+                <a href="{{ url('/availability/view') }}"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> <span class="nav-label">View Availabilty</span> </a>
             </li>
-        
+            <li class="{{ isActiveRoute('schedule') }}">
+                <a href="{{ route('schedule') }}"><i class="fa fa-calendar" aria-hidden="true"></i> <span class="nav-label">Scheduale</span> </a>
+            </li>
         </ul>
 
     </div>

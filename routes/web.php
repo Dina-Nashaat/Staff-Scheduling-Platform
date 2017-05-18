@@ -85,7 +85,7 @@ Route::group(['middleware' => 'auth'], function() {
 	]);
 
 	Route::get('/schedule', [
-		'as' => 'availability',
+		'as' => 'schedule',
 		'uses' => 'ScheduleController@getSchedule'
 	]);
 
