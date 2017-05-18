@@ -27,7 +27,7 @@
                     <div class="table-responsive white-bg">
                     <table class="table table-striped table-hover datatables" >
                         <thead>
-                           <th style="text-align: center;">User_id</th>
+                           <th style="text-align: center;">Name</th>
                            <th style="text-align: center;">Start Time</th>
                            <th style="text-align: center;">End Time</th>
                         </thead>
@@ -62,9 +62,10 @@
             success: function (d) {
                 $.each(JSON.parse(d), function (i, val) {
                     var row = document.createElement('tr');
-                    
+
+                    console.log(val);
                     var user = document.createElement('td');
-                    $(user).append(val.user_id);
+                    $(user).append(val.user.firstname + " " + val.user.lastname);
                     
                     var start = document.createElement('td');
                     $(start).append(val.start_time);

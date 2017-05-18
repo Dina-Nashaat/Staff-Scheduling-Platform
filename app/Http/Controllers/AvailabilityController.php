@@ -57,7 +57,7 @@ class AvailabilityController extends Controller
         $availability->delete();
         return $availability;
     }
-    
+
     function view()
     {
         return view('home.view');
@@ -66,8 +66,12 @@ class AvailabilityController extends Controller
     function get()
     {
         $input = Request::all();
-        $ylas = Availability::where('date', $input['eventdate'])->get();
-        return json_encode($ylas);
+        $availabilities = Availability::where('date', $input['eventdate'])->get();
+        $users = array();
+        foreach ($availabilities as $availability) {
+            array_push($users, $availability->user);
+        }
+        return json_encode($availabilities);
     }
 }   
 
