@@ -35,11 +35,18 @@
         // page is now ready, initialize the calendar...
         var _token = $('#_token').val();
         $('#calendar').fullCalendar({
+            eventRender: function(event, element) {
+            element.html(event.title +
+                '<span class="removeEvent glyphicon glyphicon-trash pull-right" id="Delete"></span>');
+            },
             defaultView: 'agendaWeek',
             minTime: "06:00:00",
             maxTime: "22:00:00",
             scrollTime: "22:00:00",
             allDaySlot: false,
+            selectOverlap: function(event) {
+                return event.rendering === 'background';
+            },
             contentHeight: "auto",
             editable: true,
             selectable: true,
@@ -107,18 +114,20 @@
             });
         },
         eventClick: function(calEvent, jsEvent, view) {
-               $.ajax({
-                url: 'availability/delete',
-                data: '&id=' + calEvent._id +  '&_token=' + _token,
-                type: "POST",
-                dataType: "json",
-                success: function(output) {
-                    console.log(calEvent._id);
-                    $('#calendar').fullCalendar('removeEvents', calEvent.id);
-                    console.log('Deleted Successfully');
-                    }});
-                 
-                //return event == calEvent;
+
+            if(jsEvent.target.id === 'Delete')
+                {
+                    $.ajax({
+                    url: 'availability/delete',
+                    data: '&id=' + calEvent._id +  '&_token=' + _token,
+                    type: "POST",
+                    dataType: "json",
+                    success: function(output) {
+                        console.log(calEvent._id);
+                        $('#calendar').fullCalendar('removeEvents', calEvent.id);
+                        console.log('Deleted Successfully');
+                        }});    
+                }  
             },
         });
     });
