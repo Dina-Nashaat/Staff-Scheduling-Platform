@@ -16,7 +16,7 @@
                                 Availability
                             </h1>
                             <small>
-                                Choose the suitable Availability
+                                Select your suitable Availability
                             </small>
                             <div id='calendar' style="background:#fafafc;"></div>
                         </div>
