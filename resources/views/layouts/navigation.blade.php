@@ -32,7 +32,7 @@
                 <a href="{{ url('/availability/view') }}"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> <span class="nav-label">View Availabilty</span> </a>
             </li>
             <li class="{{ isActiveRoute('schedule') }}">
-                <a href="{{ route('schedule') }}"><i class="fa fa-calendar" aria-hidden="true"></i> <span class="nav-label">Scheduale</span> </a>
+                <a href="{{ route('schedule') }}"><i class="fa fa-calendar" aria-hidden="true"></i> <span class="nav-label">Schedule</span> </a>
             </li>
         </ul>
 

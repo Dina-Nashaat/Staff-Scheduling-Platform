@@ -12,6 +12,7 @@ class ScheduleController extends Controller
 {
     function store()
     {
+        
         $input = Request::all();
         $data['eventName'] = $input['eventName'];
         $data['eventDate'] = $input['eventDate'];

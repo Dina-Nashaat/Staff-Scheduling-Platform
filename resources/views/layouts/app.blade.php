@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="{!! asset('css/vendor.css') !!}" />
     <link rel="stylesheet" href="{!! asset('css/app.css') !!}" />
     
-    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js">
-    
     @yield('dependancies')
 </head>
 <body>
