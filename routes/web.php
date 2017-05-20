@@ -108,6 +108,11 @@ Route::group(['middleware' => 'auth'], function() {
 		'as' => 'schedule.assignPost',
 		'uses' => 'ScheduleController@assign'
 	]);
+	
+	Route::post('/schedule/checkIfUserScheduled', [
+	'as' => 'schedule.checkIfUserScheduled',
+	'uses' => 'ScheduleController@checkIfUserScheduled'
+]);
 
 	Route::post('/schedule/delete', [
 		'as' => 'schedule.delete',

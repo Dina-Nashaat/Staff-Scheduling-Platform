@@ -78,6 +78,14 @@ class ScheduleController extends Controller
         }else $duplicate = 1;
         
         return $duplicate;
-
+    }
+    function checkIfUserScheduled(){
+        $input = Request::all();
+        $user = User::find($input['userID']);
+        if (!$user->schedules->contains($input['eventID'])) 
+            $exists = 0;
+        else
+            $exists = 1;
+        return $exists;
     }
 }

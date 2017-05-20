@@ -92,7 +92,8 @@
                     var name = $("<td id= name"+index+"></td>>").append(availability.user.firstname + " " + availability.user.lastname);
                     var start_time = $("<td id=start"+index+"></td>>").append(availability.start_time);
                     var end_time = $("<td id=end"+index+"></td>>").append(availability.end_time);
-                    var anchor = $("<td></td>>").append("<a>Assign</a>");
+                    
+                    var anchor = $("<td></td>>").append("<a id=\"assign\">Assign</a>");
 
                     var row = $("<tr></tr>>").append(hiddenID).append(name).append(start_time).append(end_time).append(anchor);
                     
@@ -126,7 +127,7 @@
         });
 
       });
-        $(document.body).on('click','li>a',function(){
+        $(document.body).on('click','li>a',function(event){
             var selText = $(this).text();
             var elementType = $(this).parent().parent().siblings(); //The button
             
@@ -136,12 +137,25 @@
             //Change button ID
             eventID = $(this).siblings("input").val();
             elementType.attr("id",eventID);
+
+            userID = $(event.target).parent().parent().parent().parent().siblings('input').val();
+            //Check if user is already assigned
+            $.ajax({
+                url:'/schedule/checkIfUserScheduled',
+                type:'POST',
+                data:'eventID='+eventID+'&userID='+userID,
+                dataType:'json',
+                success:function(exists)
+                {
+                    if(exists)
+                        $(event.target).parent().parent().parent().parent().siblings('td').find('a').text("Withdraw");
+                }
+            });
             
         });
         var selEl = [];
-        $(document.body).on('click','td>a',function(event){
+        $(document.body).on('click','#assign',function(event){
             userID = $(event.target).parent().parent().children('input').val();
-            console.log(userID);
             //Get Button from where a stands
             eventID = $(this).parent().siblings("#eventDropdown").children('.dropdown').children('button').attr('id');
 
@@ -151,10 +165,19 @@
                 type: 'POST',
                 data: 'eventID='+eventID+"&userID="+userID,
                 dataType: "json",
-                success:function(output)
+                success:function(duplicate)
                 {
-                    console.log(output);
-                    console.log("7amdela 3al Salama");
+                    if(duplicate)
+                    {
+                        //Alert
+                        console.log("It's a duplicate. No one is assigned.'");
+                    }
+                    else
+                    {
+                        console.log("Addedd Successfully");
+                        $(event.target).html('Widthdraw');
+                        $(event.target).attr('id','withdraw');
+                    }
                 }
             });
 
