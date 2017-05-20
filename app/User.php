@@ -38,4 +38,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('Availability');
     }
+
+    public function schedules()
+    {
+        return $this->belongsToMany('App\Schedule')->withTimestamps();
+    }
 }

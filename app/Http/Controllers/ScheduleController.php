@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Request;
 use App\Schedule;
+use App\User;
 use Auth;
 use \Datetime;
 
@@ -65,5 +66,18 @@ class ScheduleController extends Controller
         return $schedule;
     }
 
-	
+	function assign()
+    {
+        $input = Request::all();
+        $user = User::find($input['userID']);
+
+        //$duplicate = 0;
+        if (!$user->schedules->contains($input['eventID'])) {
+          $user->schedules()->attach($input['eventID']);
+          $duplicate = 0;
+        }else $duplicate = 1;
+        
+        return $duplicate;
+
+    }
 }

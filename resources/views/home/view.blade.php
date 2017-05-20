@@ -19,7 +19,7 @@
                             <div>
 							{!! Form::open(['url'=>'availability/view']) !!}
                                     Date:
-                                     <input type="date" name="eventdate" id="eventDate" value="2017-05-15">
+                                     <input type="date" name="eventdate" id="eventDate">
                                      <button type="submit" class="btn btn-primary">Fetch</button>
                             {!! Form::close() !!}
 							</div>
@@ -60,10 +60,12 @@
             $('.table-responsive').css( "overflow", "auto" );
         })
 
+        var userID;
+        var eventID;
 
         $(function () {
 
-        var eventDate = $("#eventDate").val();   
+        //var eventDate = $("#eventDate").val();   
 
         $('form').on('submit', function (e) {
 
@@ -76,21 +78,23 @@
           $.ajax({
             type: 'POST',
             url: '/availability/get',
-            data: "eventdate="+ eventDate,
+            data: $('form').serialize(),
             success: function (output) { 
                 //Get list of events and availabilities
                 
                 var events = output.events;
                 var availabilities = output.availabilities;
                 
+                $("#table-body").html('');
                 $.each(availabilities, function(index, availability ) {
                     
-                    var name = $("<td></td>>").append(availability.user.firstname + " " + availability.user.lastname);
-                    var start_time = $("<td></td>>").append(availability.start_time);
-                    var end_time = $("<td></td>>").append(availability.end_time);
-                    var anchor = $("<td></td>>").append("<a href=\"#\">Assign</a>");
+                    var hiddenID = $("<input type=\"hidden\" id=userID"+index+" value="+availability.user.id+">");
+                    var name = $("<td id= name"+index+"></td>>").append(availability.user.firstname + " " + availability.user.lastname);
+                    var start_time = $("<td id=start"+index+"></td>>").append(availability.start_time);
+                    var end_time = $("<td id=end"+index+"></td>>").append(availability.end_time);
+                    var anchor = $("<td></td>>").append("<a>Assign</a>");
 
-                    var row = $("<tr></tr>>").append(name).append(start_time).append(end_time).append(anchor);
+                    var row = $("<tr></tr>>").append(hiddenID).append(name).append(start_time).append(end_time).append(anchor);
                     
 
                     var dropdown = $("<div class=\"dropdown\"></div>")
@@ -106,10 +110,12 @@
                     
                     $.each(events, function(i, event){
                         var liAnchor = $("<a></a>");
+                        var hiddenID = $("<input type=\"hidden\" id=eventID"+index+" value="+event.id+">");
                         liAnchor.append(event.eventName);
-                        $(ul).append($("<li></li>").append(liAnchor));
+                       var list = $("<li></li>").append(hiddenID);
+                        $(ul).append(list.append(liAnchor));
                     });
-                   var eventsList = $("<td></td>").append(dropdown.append(ul));
+                   var eventsList = $("<td id=\"eventDropdown\"></td>").append(dropdown.append(ul));
                    row.append(eventsList);
                    $("#table-body").append(row);
                 });
@@ -121,12 +127,40 @@
 
       });
         $(document.body).on('click','li>a',function(){
-            console.log("ay 7aga  ya 3am");
             var selText = $(this).text();
-            console.log(selText);
-            var elementType = $(this).parent().parent().siblings().html(selText+' <span class="caret"></span>');
-            console.log(elementType); 
-    });
+            var elementType = $(this).parent().parent().siblings(); //The button
+            
+            //Change button text
+            elementType.html(selText+' <span class="caret"></span>');
+            
+            //Change button ID
+            eventID = $(this).siblings("input").val();
+            elementType.attr("id",eventID);
+            
+        });
+        var selEl = [];
+        $(document.body).on('click','td>a',function(event){
+            userID = $(event.target).parent().parent().children('input').val();
+            console.log(userID);
+            //Get Button from where a stands
+            eventID = $(this).parent().siblings("#eventDropdown").children('.dropdown').children('button').attr('id');
+
+            //TO HANDLE, what if selected none.--------------------
+            $.ajax({
+                url:'/schedule/assign',
+                type: 'POST',
+                data: 'eventID='+eventID+"&userID="+userID,
+                dataType: "json",
+                success:function(output)
+                {
+                    console.log(output);
+                    console.log("7amdela 3al Salama");
+                }
+            });
+
+
+        });
+
     </script>
 
 @endsection
