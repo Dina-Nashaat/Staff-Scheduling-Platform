@@ -15,11 +15,8 @@ class ScheduleController extends Controller
     {
         
         $input = Request::all();
-        $data['eventName'] = $input['eventName'];
-        $data['eventDate'] = $input['eventDate'];
-        $data['start_time'] = $input['startTime'];
-        $data['end_time'] = $input['endTime'];
-        $schedule = Schedule::create($data);
+        //dd($input);
+        $schedule = Schedule::create($input);
         return $schedule->id;
     }
 
@@ -29,15 +26,17 @@ class ScheduleController extends Controller
         $data = [];
         foreach($query as $q)
         {
-            $date = $q->eventDate;
+            $date = $q->event_date;
             $start = $date.' '.$q->start_time;
             $end = $date.' '.$q->end_time;
-            $title = $q->eventName;
+            $title = $q->event_name;
             $id = $q->id;
+            $color = $q->event_color;
 
             $data[] = array('start'=>$start,
                             'end' =>$end,
                             'title' => $title,
+                            'color' => $color,
                             'id'=>$id);
         }
         return json_encode($data);
@@ -50,6 +49,7 @@ class ScheduleController extends Controller
         $data['eventDate'] = $input['Date'];
         $data['start_time'] = $input['startTime'];
         $data['end_time'] = $input['endTime'];
+        $data['event_color'] = $input['event_color'];
         $schedule->update($data);
     }
         

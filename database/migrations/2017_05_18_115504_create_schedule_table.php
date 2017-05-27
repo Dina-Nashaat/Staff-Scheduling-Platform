@@ -15,10 +15,11 @@ class CreateScheduleTable extends Migration
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('eventName');
-            $table->date('eventDate');
+            $table->string('event_name');
+            $table->date('event_date');
             $table->time('start_time');
             $table->time('end_time');
+            $table->string('event_color');
             $table->timestamps();
         });
     }

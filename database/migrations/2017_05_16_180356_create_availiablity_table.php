@@ -13,7 +13,7 @@ class CreateAvailiablityTable extends Migration
      */
     public function up()
     {
-        Schema::create('availability', function (Blueprint $table) {
+        Schema::create('availabilities', function (Blueprint $table) {
             $table->increments('id');
 			$table->integer('user_id');
 			$table->date('date');
