@@ -15,8 +15,20 @@ class ScheduleController extends Controller
     {
         
         $input = Request::all();
-        //dd($input);
+        $assigned = $input['assigned'];
+        $array =[];
+        
         $schedule = Schedule::create($input);
+        if(!empty($assigned))
+        {
+            $array = explode(',', $assigned);
+        }
+        foreach($array as $assigned_id)
+        {
+            $user = User::find($assigned_id);
+            $eventId = $schedule->id;
+            $duplicate = self::assignYLA($user, $eventId);
+        }   
         return $schedule->id;
     }
 
@@ -32,7 +44,6 @@ class ScheduleController extends Controller
             $title = $q->event_name;
             $id = $q->id;
             $color = $q->event_color;
-
             $data[] = array('start'=>$start,
                             'end' =>$end,
                             'title' => $title,
@@ -70,13 +81,18 @@ class ScheduleController extends Controller
     {
         $input = Request::all();
         $user = User::find($input['userID']);
+        $eventId = $input['eventID'];
+        $duplicate = self::assignYLA($user, $eventId);
+        return $duplicate;
+    }
 
-        //$duplicate = 0;
-        if (!$user->schedules->contains($input['eventID'])) {
-          $user->schedules()->attach($input['eventID']);
+    function assignYLA($user,$eventId)
+    {
+          //$duplicate = 0;
+        if (!$user->schedules->contains($eventId)) {
+          $user->schedules()->attach($eventId);
           $duplicate = 0;
         }else $duplicate = 1;
-        
         return $duplicate;
     }
     function checkIfUserScheduled(){

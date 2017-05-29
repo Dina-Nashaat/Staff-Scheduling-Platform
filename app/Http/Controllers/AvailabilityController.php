@@ -80,5 +80,19 @@ class AvailabilityController extends Controller
         
         return $arr;
     }
+    function availableAtTime()
+    {
+        $input = Request::all();
+        $condition = ['date' => $input['event_date'],
+                        'start_time'=>$input['start_time'],
+                        'end_time'=>$input['end_time']];
+
+        $availabilities = Availability::where($condition)->get();
+         $users = array();
+        foreach ($availabilities as $availability) {
+            array_push($users, $availability->user);
+        }
+        return $availabilities;
+    }
 }   
 

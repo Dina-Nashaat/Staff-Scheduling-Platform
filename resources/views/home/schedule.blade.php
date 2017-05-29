@@ -2,6 +2,8 @@
 
 @section('dependancies')
     <link rel='stylesheet' href='fullcalendar/fullcalendar.css' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+
 @endsection
 
 @section('title', 'Schedule')
@@ -34,9 +36,11 @@
                             </div>
                             <div class="modal-body">
                                 <input id="event_title" class="form-control">
-                                <div style="padding-top:10px;" id="colorPicker">
-                                    Event Color : 
-                                </div>
+                                <div style="padding-top:10px;" id="colorPicker"></div>
+                                <select class="selectpicker" multiple>
+                                    <option value = "1">Mustard</option>
+                                </select>
+
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default"  data-dismiss="modal" id="close_modal">Close</button>
@@ -68,9 +72,13 @@
     </div>
 @endsection
 @section('scripts')
-<script src='lib/jquery.min.js'></script>
 <script src='lib/moment.min.js'></script>
 <script src='fullcalendar/fullcalendar.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+<script type="text/javascript">
+    $('.selectpicker').selectpicker({
+      });
+</script>
 <!--Passing blade options-->
 <script>
     var userId = {{Auth::user()->id}}

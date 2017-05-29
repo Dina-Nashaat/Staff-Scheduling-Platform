@@ -83,6 +83,15 @@ Route::group(['middleware' => 'auth'], function() {
 		'as' => 'availability.post',
 		'uses' => 'AvailabilityController@get',
 	]);
+	Route::get('/availability/availableAtTime', [
+		'as' => 'availability.availableAtTime',
+		'uses' => 'AvailabilityController@availableAtTime',
+	]);
+
+	Route::post('/availability/availableAtTime', [
+		'as' => 'availability.availableAtTime',
+		'uses' => 'AvailabilityController@availableAtTime',
+	]);
 
 	Route::get('/schedule', [
 		'as' => 'schedule',

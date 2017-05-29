@@ -38,9 +38,6 @@
     <!-- End wrapper-->
 
 <script src="{!! asset('js/app.js') !!}" type="text/javascript"></script>
-<script src="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" type="text/javascript"></script>
-<script src="{{ asset('/assets/dist/js/datatable.js') }}" type="text/javascript"></script>
-
 @section('scripts')
 @show
 
