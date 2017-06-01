@@ -49,5 +49,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{asset('/')}}assets/js/view.js"></script>
+    <script src="{{asset('/')}}js/view.js"></script>
 @endsection
