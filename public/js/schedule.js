@@ -22,7 +22,7 @@ function getAssignees(startEv, endEv) {
         color: color,
     };
     var Date = $.fullCalendar.formatDate(eventData.start, 'YYYY-MM-D');
-    var startTime = $.fullCalendar.formatDate(eventData.start, 'hh:mm:s s');
+    var startTime = $.fullCalendar.formatDate(eventData.start, 'hh:mm:ss');
     var endTime = $.fullCalendar.formatDate(eventData.end, 'hh:mm:ss');
     $.ajax({
         type: 'POST',
