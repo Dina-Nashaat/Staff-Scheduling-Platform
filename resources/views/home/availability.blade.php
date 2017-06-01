@@ -36,8 +36,8 @@
         var _token = $('#_token').val();
         $('#calendar').fullCalendar({
             eventRender: function(event, element) {
-            element.html(event.title +
-                '<span class="removeEvent glyphicon glyphicon-trash pull-right" id="Delete"></span>');
+                event.title = 'Available';
+                element.prepend('<span style = "margin-right: 5px; z-index:90;" class="removeEvent glyphicon glyphicon-trash pull-left" id="Delete"></span>');
             },
             defaultView: 'agendaWeek',
             minTime: "06:00:00",
