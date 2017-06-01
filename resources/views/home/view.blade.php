@@ -17,11 +17,9 @@
                                 Pick a date
                             </small>
                             <div>
-							{!! Form::open(['url'=>'availability/view']) !!}
-                                    Date:
-                                     <input type="date" name="eventdate" id="eventDate">
-                                     <button type="submit" class="btn btn-primary">Fetch</button>
-                            {!! Form::close() !!}
+                                Date:
+                                    <input type="date" name="eventdate" id="eventDate">
+                                    <button type="submit" class="btn btn-primary">Fetch</button>
 							</div>
 							<div class="row">
             <div class="col-lg-12">
