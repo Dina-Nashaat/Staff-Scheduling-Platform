@@ -16,7 +16,7 @@ class CreateScheduleUserTable extends Migration
         Schema::create('schedule_user', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned()->nullable();
-            $table->foreign('user_id')->references('id')->on('Users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('schedule_id')->unsigned()->nullable();
             $table->foreign('schedule_id')->references('id')->on('schedules')->onDelete('cascade');
             $table->timestamps();   
