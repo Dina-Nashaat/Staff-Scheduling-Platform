@@ -11,14 +11,24 @@ use \Datetime;
 
 class ScheduleController extends Controller
 {
+
+    public function getSchedule()
+    {
+        return view('home/schedule');
+    }
+
     function store()
     {
         
         $input = Request::all();
         $assigned = $input['assigned'];
         $array =[];
+        $users = [];
         
         $schedule = Schedule::create($input);
+
+        //Update the schedule_user table in case 
+        //YLAs are scheduled
         if(!empty($assigned))
         {
             $array = explode(',', $assigned);
@@ -26,9 +36,10 @@ class ScheduleController extends Controller
         foreach($array as $assigned_id)
         {
             $user = User::find($assigned_id);
+            array_push($users,$user->id);
             $eventId = $schedule->id;
-            $duplicate = self::assignYLA($user, $eventId);
         }   
+        $duplicate = self::assignYLA($users, $schedule);
         return $schedule->id;
     }
 
@@ -57,16 +68,17 @@ class ScheduleController extends Controller
     {
         $input = Request::all();
         $schedule = Schedule::find($input['id']);
-        $data['eventDate'] = $input['Date'];
-        $data['start_time'] = $input['startTime'];
-        $data['end_time'] = $input['endTime'];
-        $data['event_color'] = $input['event_color'];
-        $schedule->update($data);
-    }
-        
-    public function getSchedule()
-    {
-        return view('home/schedule');
+        $schedule->update($input);
+
+         if(isset($input['assigned']))
+         {
+            $assigned = $input['assigned'];
+            $assigned_array = [];
+            if(!empty($assigned))
+                $assigned_array = explode(',', $assigned);
+            $duplicate = self::assignYLA($assigned_array, $schedule);
+        }
+        return $schedule;
     }
 
     function delete()
@@ -77,24 +89,14 @@ class ScheduleController extends Controller
         return $schedule;
     }
 
-	function assign()
+    function assignYLA($users,$schedule)
     {
-        $input = Request::all();
-        $user = User::find($input['userID']);
-        $eventId = $input['eventID'];
-        $duplicate = self::assignYLA($user, $eventId);
+        $duplicate = 0;
+        $schedule->users()->sync($users);
         return $duplicate;
     }
 
-    function assignYLA($user,$eventId)
-    {
-          //$duplicate = 0;
-        if (!$user->schedules->contains($eventId)) {
-          $user->schedules()->attach($eventId);
-          $duplicate = 0;
-        }else $duplicate = 1;
-        return $duplicate;
-    }
+
     function checkIfUserScheduled(){
         $input = Request::all();
         $user = User::find($input['userID']);
@@ -104,4 +106,16 @@ class ScheduleController extends Controller
             $exists = 1;
         return $exists;
     }
+    
+    function getScheduled(){
+        $input = Request::all();
+        $schedule = Schedule::find($input['eventId']);
+        $assigned = [];
+        foreach($schedule->users as $user)
+        {
+          array_push($assigned,$user->id);
+        }
+        return $assigned;
+    }
+
 }

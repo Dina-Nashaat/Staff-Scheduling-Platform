@@ -1,24 +1,24 @@
 /* Global Variables */
 var _token = $('#_token').val();
-var eventId, startEvent, endEvent, color, selectedStartTime, selectedEndTime;
+var eventId, startEvent, endEvent, color, selectedStartTime, selectedEndTime, done;
+var selected = []
 
 /** Create multiple colors */
-function generateColors() {
+function generateColors(colorIdTag) {
     colors = ['#B71C1C', '#880E4F', '#4A148C', '#311B92', '#E65100', '#212121', '#0D47A1', '#FF6F00'];
-    $("#colorPicker").append('Event Color : ');
+    $(colorIdTag).append('Event Color : ');
     $.each(colors, function (i, color) {
         var span = $('<a><span id = "color" name = "' + color + '" style = "padding-left:15px; margin-left: 2px;margin-right: 3px;font-size:14px; background-color:' + color + '">&nbsp;</span></a>');
-        console.log(span);
-        $('#colorPicker').append(span);
+        $(colorIdTag).append(span);
     });
 }
 
 /** Get people scheduled at the specified time */
-function getAssignees() {
-    console.log("I'm getting the YLAs available");
+function getAssignees(startEv, endEv) {
+    
     eventData = {
-        start: startEvent,
-        end: endEvent,
+        start: startEv,
+        end: endEv,
         color: color,
     };
     var Date = $.fullCalendar.formatDate(eventData.start, 'YYYY-MM-D');
@@ -35,15 +35,14 @@ function getAssignees() {
                 $('.selectpicker').append('<option value =' + availability.user.id +
                     '>' + availability.user.firstname + '</option>')
                 $('.selectpicker').selectpicker('refresh');
-            });
-            console.log(users)
+            });            
         }
     });
 }
 
+/** Assign a color to event on click */
 $(document.body).on('click', '#color', function getColor(event) {
     color = $(event.target).attr('name');
-    console.log(color);
 });
 
 /** Save changes on Enter Key in Add Event Modal */
@@ -62,18 +61,11 @@ $("#delete_btn").click(function () {
         dataType: "json",
         success: function (output) {
             $('#calendar').fullCalendar('removeEvents', eventId);
-            console.log('Deleted Successfully');
+            //console.log('Deleted Successfully');
         }
     });
     $("#deleteModal").modal('hide');
 });
-
-var selected = []
-    $('.selectpicker').on('change', function () {
-        selected = $('.selectpicker').val();
-        console.log(selected); //Get the multiple values selected in an array
-        console.log(selected.length); //Length of the array
-    });
 
 /** Save an event to database */
 $("#save_btn").click(function () {
@@ -85,12 +77,12 @@ $("#save_btn").click(function () {
             end: endEvent,
             color: color,
         };
-        console.log(eventData);
         var Date = $.fullCalendar.formatDate(eventData.start, 'YYYY-MM-D');
         var startTime = $.fullCalendar.formatDate(eventData.start, 'hh:mm:ss');
         var endTime = $.fullCalendar.formatDate(eventData.end, 'hh:mm:ss');
+        selected = $('.selectpicker').val();
     }; //else AN ERROR OCCURS
-    
+
     //Send data as post request to server
     $.ajax({
         url: 'schedule/post',
@@ -111,25 +103,74 @@ $("#save_btn").click(function () {
     $("#titleModal").modal('hide');
     //Clear the input for event title 
     $("#event_title").val("");
+    //Clear color
+    color = "";
 });
 
-/** Set focus on Input in Add Event Modal */
+/** Update an event to the database */
+$("#update_btn").click(function(e){
+    var title = $("#edit_event_title").val();
+    selected = $('#editSelector').val();
+    console.log(selected);
+    if (title) {
+        eventData = {
+            title: title,
+            start: startEvent,
+            end: endEvent,
+            color: color,
+        };
+    }
+     $.ajax({
+        url: 'schedule/update',
+        data: '&event_name=' + title +
+        '&event_color=' + color +
+        '&id=' + eventId +
+        '&assigned=' + selected + '&_token=' + _token,
+        type: "POST",
+        dataType: "json",
+        success: function (output) {
+            eventID = output['id']
+            eventData.color = output['event_color'];
+            eventData.id = eventID;
+            $('#calendar').fullCalendar( 'removeEvents', [eventID] );
+            $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+            $('#calendar').fullCalendar('unselect');
+        }
+    });
+    //Hide Modal
+    $("#editModal").modal('hide');
+    //Clear the input for event title 
+    $("#edit_event_title").val("");
+    //Clear Color
+    color = "";
+    // console.log('updated Successfully');
+});
+
+/** Modals Settings */
 $('#deleteModal').on('show.bs.modal', function () {
     $('#close_modal2').focus()
 });
-
 $('#titleModal').on('show.bs.modal', function () {
     $('#event_title').focus()
-    generateColors();
-    getAssignees();
+    generateColors("#colorPicker");
+    getAssignees(startEvent,endEvent);
 })
-
 $('#titleModal').on('hidden.bs.modal', function () {
     $("#colorPicker").empty();
     $('.selectpicker').empty();
     $('.selectpicker').selectpicker('refresh');
     selected.length = 0;
-    console.log(selected);
+})
+$('#editModal').on('show.bs.modal', function () {
+    $('#edit_event_title').focus()
+    generateColors("#colorPicker2");
+    $('#schedule-div').removeClass('animated').removeClass('fadeInRight');
+})
+$('#editModal').on('hidden.bs.modal', function () {
+    $("#colorPicker2").empty();
+    $('.selectpicker').empty();
+    $('.selectpicker').selectpicker('refresh');
+    selected.length = 0;
 })
 
 $(document).ready(function () {
@@ -138,8 +179,7 @@ $(document).ready(function () {
     $('#calendar').fullCalendar({
 
         eventRender: function (event, element) {
-            element.html('<span style = "margin-right: 5px;" class="removeEvent glyphicon glyphicon-trash pull-left" id="Delete"></span>'
-                + event.title);
+            element.prepend('<span style = "margin-right: 5px; z-index:90;" class="removeEvent glyphicon glyphicon-trash pull-left" id="Delete"></span>');
         },
 
         header: { center: 'month,agendaWeek,agendaDay' },
@@ -149,11 +189,11 @@ $(document).ready(function () {
         maxTime: "22:00:00",
         scrollTime: "22:00:00",
         allDaySlot: false,
+        allDay:true,
         contentHeight: "auto",
         editable: true,
         selectable: true,
         events: '/schedule/fetch',
-        //theme: true,
 
         /*Get Start and End times upon user selection*/
         select: function (start, end) {
@@ -164,50 +204,80 @@ $(document).ready(function () {
 
         /*Update Schedule in case user changes date from one day to another*/
         eventDrop: function (event, delta) {
+            selected = $('#editSelector').val();
             var Date = $.fullCalendar.formatDate(event.start, 'YYYY-MM-D');
             var startTime = $.fullCalendar.formatDate(event.start, 'hh:mm:ss');
             var endTime = $.fullCalendar.formatDate(event.end, 'hh:mm:ss');
             $.ajax({
                 url: 'schedule/update',
-                data: 'title=' + event.title + '&startTime=' + startTime + '&endTime=' + endTime + '&Date=' + Date + '&id=' + event.id + '&_token=' + _token,
+                data: 'title=' + event.title + '&start_time=' + startTime + 
+                    '&end_time=' + endTime + '&event_date=' + Date +
+                    '&id=' + event.id + '&assigned=' + selected +
+                    '&_token=' + _token,
                 type: "POST",
                 dataType: "json",
                 success: function (output) {
-                    eventData.id = output;
-                    console.log('Updated Successfully');
+                    // eventData.id = output;
+                    //console.log('Updated Successfully');
                 }
             });
         },
 
         /*Update Schedule in case user changes time*/
         eventResize: function (event) {
+            selected = $('#editSelector').val();
             var Date = $.fullCalendar.formatDate(event.start, 'YYYY-MM-D');
             var startTime = $.fullCalendar.formatDate(event.start, 'hh:mm:ss');
             var endTime = $.fullCalendar.formatDate(event.end, 'hh:mm:ss');
 
             $.ajax({
                 url: 'schedule/update',
-                data: 'title=' + event.title + '&startTime=' + startTime + '&endTime=' + endTime + '&Date=' + Date + '&id=' + event.id + '&_token=' + _token,
+                data: 'title=' + event.title + '&start_time=' + startTime +
+                    '&end_time=' + endTime + '&event_date=' + Date +
+                    '&id=' + event.id + '&assigned=' + selected +
+                    '&_token=' + _token,
                 type: "POST",
                 dataType: "json",
                 success: function (output) {
-                    eventData.id = output;
-                    console.log('updated Successfully');
+                   // eventData.id = output;
+                   // console.log('updated Successfully');
                 }
             });
         },
 
-        /*Delete schedule in case user clicks on the delete icon on the event*/
+        /*Edit/Delete Schedule upon user click on event*/
         eventClick: function (calEvent, jsEvent, view) {
-            eventId = calEvent._id;
+            eventId = calEvent.id;
             title = calEvent.title;
-            data = title + " on " + $.fullCalendar.formatDate(calEvent.start, 'D-MM-YYYY') +
-                " from " + $.fullCalendar.formatDate(calEvent.start, 'hh:mm') +
+            startEvent = $.fullCalendar.formatDate(calEvent.start, 'D-MM-YYYY');
+            endEvent = $.fullCalendar.formatDate(calEvent.start, 'hh:mm');
+            data = title + " on " + startEvent +
+                " from " +  endEvent +
                 " to " + $.fullCalendar.formatDate(calEvent.end, 'hh:mm');
-            console.log(eventId, title);
+
             if (jsEvent.target.id === 'Delete') {
                 $("#event_delete").html(data);
                 $("#deleteModal").modal('show');
+            } else {
+                $.ajax({
+                    url: 'schedule/getScheduled',
+                    data: 'eventId=' + eventId + '&_token=' + _token,
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function (output) {
+                        assigned = output;
+                        startEvent = calEvent.start;
+                        endEvent = calEvent.end;
+                        getAssignees(startEvent, endEvent);
+                        $("#editModal").modal('show');
+                        $(document).ajaxComplete(function(){
+                            $('#edit_event_title').val(title);
+                            color = calEvent.color;
+                            $('.selectpicker').selectpicker();
+                            $('.selectpicker').selectpicker('val',assigned);
+                        });
+                    }
+                });
             }
         },
     });

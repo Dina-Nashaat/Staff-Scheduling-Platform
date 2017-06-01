@@ -13,4 +13,9 @@ class schedule extends Model
         'end_time', 
         'event_color'
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany('App\User')->withTimestamps();
+    }
 }
