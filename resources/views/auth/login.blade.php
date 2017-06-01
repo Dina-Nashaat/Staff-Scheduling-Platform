@@ -31,7 +31,7 @@
             <div>
                 <img style="width: 238px; height: 67px;" src="{{asset('/')}}assets/dist/img/logo-british-council-color.png">
             </div>
-            <h1>Have to a good day</h1>
+            <h1>Have a good day</h1>
             <div class="middle-box">
                 @if(Session::has('success'))
                     <p class="text-success">{!! Session::get('success') !!}</p>
