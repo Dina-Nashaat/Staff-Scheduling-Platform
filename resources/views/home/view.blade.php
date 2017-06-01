@@ -17,10 +17,12 @@
                                 Pick a date
                             </small>
                             <div>
+                            {!! Form::open(['url'=>'availability/get']) !!}
                                 Date:
                                     <input type="date" name="eventdate" id="eventDate">
                                     <button type="submit" class="btn btn-primary">Fetch</button>
-							</div>
+							{!! Form::close() !!}
+                            </div>
 							<div class="row">
             <div class="col-lg-12">
                 <div class="text-center m-t-lg">

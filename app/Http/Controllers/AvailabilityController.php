@@ -68,7 +68,7 @@ class AvailabilityController extends Controller
     {
         $input = Request::all();
         $availabilities = Availability::where('date', $input['eventdate'])->get();
-        $events = Schedule::where('eventDate', $input['eventdate'])->get();
+        $events = Schedule::where('event_date', $input['eventdate'])->get();
         $users = array();
         foreach ($availabilities as $availability) {
             array_push($users, $availability->user);
