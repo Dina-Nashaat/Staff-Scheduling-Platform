@@ -7,3 +7,5 @@ Homestead.json
 Homestead.yaml
 envorg
 
+*.env
+config/database.php
