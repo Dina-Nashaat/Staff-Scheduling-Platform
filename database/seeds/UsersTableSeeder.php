@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
+use App\Role;
 use Carbon\Carbon;
 
 class UsersTableSeeder extends Seeder
@@ -14,7 +15,8 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        User::create([	
+
+        $user = User::create([	
         	'firstname' => 'Developer',
 	        'lastname' => 'Developer',
 	        'birthdate' => Carbon::now(),
@@ -22,7 +24,9 @@ class UsersTableSeeder extends Seeder
 	        'password' => bcrypt('12345678'),
 	        'center_id' => '1',
 	        'state' => 'active',
-	        'role_id' => '1',
+
         ]);
+        $role = App\Role::where('role_name','Super Admin')->first();
+        $role->users()->save($user);
     }
 }

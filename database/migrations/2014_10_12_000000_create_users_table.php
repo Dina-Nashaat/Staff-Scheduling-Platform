@@ -22,7 +22,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->integer('center_id');
             $table->string('state');
-            $table->integer('role_id');
+            $table->integer('role_id')->unsigned()->nullable();
+            $table->foreign('role_id')->references('id')->on('roles');
             $table->rememberToken();
             $table->timestamps();
         });

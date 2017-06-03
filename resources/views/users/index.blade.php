@@ -36,7 +36,7 @@
                             <tr>
                                 <td>{{ $user->firstname }} {{ $user->lastname }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td style="text-align:center;">{{ $user->role_id}}</td>
+                                <td style="text-align:center;">{{ $user->role->role_name}}</td>
                                 <td></td>
                                 <td style="text-align:center;">{{ $user->state }}</td>
                                 <td style="text-align:right;"><a href="#">Edit</a></td>

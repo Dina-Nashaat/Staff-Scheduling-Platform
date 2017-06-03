@@ -22,7 +22,7 @@ class User extends Authenticatable
         'password',
         'center_id',
         'state',
-        'role_id',
+        'role_id'
     ];
 
     /**
@@ -43,4 +43,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Schedule')->withTimestamps();
     }
+
+    public function role()
+    {
+        return $this->belongsTo('App\Role');
+    }
+
 }
