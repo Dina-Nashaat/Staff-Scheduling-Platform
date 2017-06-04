@@ -31,22 +31,18 @@ Route::group(['middleware' => 'guest'], function() {
 });
 
 
-Route::get('/home', [
-		'as' => 'home',
-		'uses' => 'HomeController@index',
-		'middleware' => 'role',
-		'role' => ['Super Admin']
-	]);
-
-
 Route::group(['middleware' => 'auth'], function() {
+	
+	Route::get('/home', [
+				'as' => 'home',
+				'uses' => 'HomeController@index',
+	]);
 	
 	Route::get('/logout', [
 		'as' => 'logout',
 		'uses' => 'Auth\LoginController@logout',
 	]);
 
-	
 	Route::get('/availability', [
 		'as' => 'availability',
 		'uses' => 'HomeController@getAvailability'
@@ -96,60 +92,65 @@ Route::group(['middleware' => 'auth'], function() {
 		'uses' => 'AvailabilityController@availableAtTime',
 	]);
 
-	Route::get('/schedule', [
-		'as' => 'schedule',
-		'uses' => 'ScheduleController@getSchedule'
-	]);
 
-	Route::post('/schedule/post', [
-		'as' => 'schedule.post',
-		'uses' => 'ScheduleController@store'
-	]);
+	//Admin Access
+	Route::group(['middleware' => 'role', 'role' => ['Admin', 'Super Admin']], function() {
+		Route::get('/schedule', [
+			'as' => 'schedule',
+			'uses' => 'ScheduleController@getSchedule'
+		]);
 
-	Route::get('/schedule/fetch', [
-		'as' => 'schedule.fetch',
-		'uses' => 'ScheduleController@fetch'
-	]);
+		Route::post('/schedule/post', [
+			'as' => 'schedule.post',
+			'uses' => 'ScheduleController@store'
+		]);
 
-	Route::post('/schedule/update', [
-		'as' => 'schedule.update',
-		'uses' => 'ScheduleController@update'
-	]);
+		Route::get('/schedule/fetch', [
+			'as' => 'schedule.fetch',
+			'uses' => 'ScheduleController@fetch'
+		]);
 
-	Route::post('/schedule/assign', [
-		'as' => 'schedule.assignPost',
-		'uses' => 'ScheduleController@assign'
-	]);
-	
-	Route::post('/schedule/checkIfUserScheduled', [
-	'as' => 'schedule.checkIfUserScheduled',
-	'uses' => 'ScheduleController@checkIfUserScheduled'
-	]);
+		Route::post('/schedule/update', [
+			'as' => 'schedule.update',
+			'uses' => 'ScheduleController@update'
+		]);
 
-	Route::post('/schedule/getScheduled', [
-	'as' => 'schedule.getScheduled',
-	'uses' => 'ScheduleController@getScheduled'
-	]);
+		Route::post('/schedule/assign', [
+			'as' => 'schedule.assignPost',
+			'uses' => 'ScheduleController@assign'
+		]);
+		
+		Route::post('/schedule/checkIfUserScheduled', [
+		'as' => 'schedule.checkIfUserScheduled',
+		'uses' => 'ScheduleController@checkIfUserScheduled'
+		]);
 
-	Route::post('/schedule/delete', [
-		'as' => 'schedule.delete',
-		'uses' => 'ScheduleController@delete'
-	]);
+		Route::post('/schedule/getScheduled', [
+		'as' => 'schedule.getScheduled',
+		'uses' => 'ScheduleController@getScheduled'
+		]);
 
-	Route::get('/users', [
-		'as' => 'users',
-		'uses' => 'UsersController@index',
-	]);
+		Route::post('/schedule/delete', [
+			'as' => 'schedule.delete',
+			'uses' => 'ScheduleController@delete'
+		]);
 
-	Route::get('/users/create', [
-		'as' => 'users.create',
-		'uses' => 'UsersController@create',
-	]);
+		Route::get('/users', [
+			'as' => 'users',
+			'uses' => 'UsersController@index',
+		]);
 
-	Route::post('/users/store', [
-		'as' => 'users.store',
-		'uses' => 'UsersController@store',
-	]);
+		Route::get('/users/create', [
+			'as' => 'users.create',
+			'uses' => 'UsersController@create',
+		]);
+
+		Route::post('/users/store', [
+			'as' => 'users.store',
+			'uses' => 'UsersController@store',
+		]);
+		
+	});
 
 	Route::get('/minor', 'HomeController@minor')->name("minor");
 });

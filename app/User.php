@@ -49,12 +49,13 @@ class User extends Authenticatable
         return $this->belongsTo('App\Role');
     }
 
-    public function hasRole($role)
+    public function hasRole($roles)
     {
-        if($this->role()->where('role_name',$role)->first())
-            return true;
-        else
-            return false;
+        foreach($roles as $role)
+        {
+            if($this->role()->where('role_name',$role)->first())
+                return true;
+        }
+        return false;
     }
-
 }

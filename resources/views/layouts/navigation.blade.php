@@ -23,7 +23,7 @@
                 <a href="{{ url('/home') }}"><i class="fa fa-home" aria-hidden="true"></i> <span class="nav-label">Home</span></a>
             </li>
 
-             @if (Auth::user()->role->role_name == 'Super Admin')
+             @if (Auth::user()->hasRole(['Super Admin','Admin']))
                 <li class="{{ isActiveRoute('users') }} {{ isActiveRoute('users.create') }}">
                     <a href="{{ url('/users') }}"><i class="fa fa-user" aria-hidden="true"></i> <span class="nav-label">Users Managment</span></a>
                 </li>
@@ -33,13 +33,13 @@
                     <a href="{{ url('/availability') }}"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> <span class="nav-label">Availabilty</span> </a>
                 </li>
                 
-             @if (Auth::user()->role->role_name == 'Super Admin'||Auth::user()->role->role_name == 'Admin')
+             @if (Auth::user()->hasRole(['Super Admin','Admin']))
                 <li class="{{ isActiveRoute('availability.view') }}">
                     <a href="{{ url('/availability/view') }}"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> <span class="nav-label">View Availabilty</span> </a>
                 </li>
             @endif
 
-             @if (Auth::user()->role->role_name == 'Super Admin'||Auth::user()->role->role_name == 'Admin')
+             @if (Auth::user()->hasRole(['Super Admin','Admin']))
                 <li class="{{ isActiveRoute('schedule') }}">
                     <a href="{{ route('schedule') }}"><i class="fa fa-calendar" aria-hidden="true"></i> <span class="nav-label">Schedule</span> </a>
                 </li>

@@ -20,7 +20,7 @@
             <div class="col-lg-12">
                 <div class="text-center m-t-lg">
                     <div class="table-responsive white-bg">
-                    <table class="table table-striped table-hover datatables" > <style> td{text-align:left;} th{text-align:center;}}</style>
+                    <table class="table table-striped table-hover" > <style> td{text-align:left;} th{text-align:center;}}</style>
                         <thead>
                             <tr>
                                 <th >Name</th>
@@ -33,13 +33,13 @@
                         </thead>
                         <tbody>
                         @foreach($users as $user)
-                            <tr>
+                            <tr @if( Auth::user() == $user ) style='background:#337ab7;color:white;' @endif >
                                 <td>{{ $user->firstname }} {{ $user->lastname }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td style="text-align:center;">{{ $user->role->role_name}}</td>
                                 <td></td>
                                 <td style="text-align:center;">{{ $user->state }}</td>
-                                <td style="text-align:right;"><a href="#">Edit</a></td>
+                                <td style="text-align:right;"><a @if(Auth::user()->email == $user->email) style='color:white;' @endif>Edit</a></td>
                             </tr>
                         @endforeach
                         </tbody>
