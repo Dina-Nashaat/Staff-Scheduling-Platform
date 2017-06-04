@@ -31,6 +31,13 @@ Route::group(['middleware' => 'guest'], function() {
 });
 
 
+Route::get('/home', [
+		'as' => 'home',
+		'uses' => 'HomeController@index',
+		'middleware' => 'role',
+		'role' => ['Super Admin']
+	]);
+
 
 Route::group(['middleware' => 'auth'], function() {
 	
@@ -39,10 +46,6 @@ Route::group(['middleware' => 'auth'], function() {
 		'uses' => 'Auth\LoginController@logout',
 	]);
 
-	Route::get('/home', [
-		'as' => 'home',
-		'uses' => 'HomeController@index'
-	]);
 	
 	Route::get('/availability', [
 		'as' => 'availability',
@@ -149,5 +152,4 @@ Route::group(['middleware' => 'auth'], function() {
 	]);
 
 	Route::get('/minor', 'HomeController@minor')->name("minor");
-
 });

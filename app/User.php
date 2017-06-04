@@ -49,4 +49,12 @@ class User extends Authenticatable
         return $this->belongsTo('App\Role');
     }
 
+    public function hasRole($role)
+    {
+        if($this->role()->where('role_name',$role)->first())
+            return true;
+        else
+            return false;
+    }
+
 }
