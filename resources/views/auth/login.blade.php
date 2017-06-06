@@ -26,7 +26,7 @@
 
 <body class="gray-bg login">
 <div class="login-overly">
-    <div class=" text-center loginscreen animated fadeInDown">
+    <div class=" text-center loginscreen animated fadeInDown" style="padding-top:130px;">
         <div>
             <div>
                 <img style="width: 238px; height: 67px;" src="{{asset('/')}}assets/dist/img/logo-british-council-color.png">
