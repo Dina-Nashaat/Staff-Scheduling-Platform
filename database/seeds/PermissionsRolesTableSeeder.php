@@ -29,6 +29,8 @@ class PermissionsRolesTableSeeder extends Seeder
         $part_time->permissions()->attach([
             $permissions["set_availability"],
             $permissions["get_availability"],
+            $permissions["delete_availability"],
+            
             $permissions["get_schedule"],
             $permissions["get_schedule_all"]
         ]);

@@ -19,6 +19,8 @@ class PermissionsTableSeeder extends Seeder
                     'description'=> "Get user's available time and date."],
                     ['permission_name'=>'get_availability_all',
                     'description'=> 'Get availability of all users'],
+                    ['permission_name'=>'delete_availability',
+                    'description'=> 'delete a specifiec availability for one user'],
                     
                     ['permission_name'=>'set_schedule_all',
                     'description'=> 'Set schedule for all users.'],
@@ -34,6 +36,9 @@ class PermissionsTableSeeder extends Seeder
                     'description'=> "Get user's own schedule with all its details."],
                     ['permission_name'=>'get_schedule_all',
                     'description'=> 'Get schedule of all users'],
+                    ['permission_name'=>'assign_staff',
+                    'description'=> 'Assign staff to an event.'],
+                    
 
                     ['permission_name'=>'add_user',
                     'description'=> 'Add a new user to the system.'],

@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -57,5 +58,22 @@ class User extends Authenticatable
                 return true;
         }
         return false;
+    }
+
+    public function hasPermissions($permissions)
+    {
+        foreach($permissions as $permission)
+        {
+            $sth  = DB::table('permission_role')
+                ->join('roles','roles.id','permission_role.role_id')
+                ->join('permissions','permissions.id','permission_role.permission_id')
+                ->join('users','users.role_id','roles.id');
+            
+            $exists = $sth->where([['users.id','=',$this->id],['permission_name','=',$permission]])
+                                            ->select('permissions.id')->get()->toArray();
+            if(empty($exists))
+                return false;
+        }
+        return true;
     }
 }

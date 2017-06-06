@@ -15,18 +15,39 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-
-        $user = User::create([	
+        $users = [
+            [	
         	'firstname' => 'Developer',
 	        'lastname' => 'Developer',
 	        'birthdate' => Carbon::now(),
 	        'email' => 'dev@bc.com',
 	        'password' => bcrypt('12345678'),
 	        'center_id' => '1',
-	        'state' => 'active',
+	        'state' => 'active',],
 
-        ]);
-        $role = App\Role::where('role_name','Super Admin')->first();
-        $role->users()->save($user);
+            [	
+        	'firstname' => 'Dina',
+	        'lastname' => 'Nashaat',
+	        'birthdate' => Carbon::now(),
+	        'email' => 'dina.nashaat@gmail.com',
+	        'password' => bcrypt('12345678'),
+	        'center_id' => '1',
+	        'state' => 'active',],
+
+            [	
+        	'firstname' => 'John',
+	        'lastname' => 'Adams',
+	        'birthdate' => Carbon::now(),
+	        'email' => 'john.adams@gmail.com',
+	        'password' => bcrypt('12345678'),
+	        'center_id' => '1',
+	        'state' => 'active',]
+
+        ];
+         foreach($users as $key=>$user){
+            $user_c = User::create($user);
+            $role = App\Role::where('id',$key+1)->first();
+            $role->users()->save($user_c);
+        }
     }
 }
