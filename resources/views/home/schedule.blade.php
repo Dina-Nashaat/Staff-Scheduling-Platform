@@ -4,6 +4,7 @@
     <link rel='stylesheet' href='fullcalendar/fullcalendar.css' />
     <link rel='stylesheet' href='fullcalendar/fullcalendar.print.css' media='print'/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 @endsection
 
@@ -18,14 +19,26 @@
                             <h1>
                                 Schedule
                             </h1>
-                            <small>
-                                Add Schedule of Events
-                            </small>
-                            <div id='calendar' style="background:#fafafc;"></div>
+                            @if (Auth::user()->hasPermissions(['set_schedule_all']))
+                                <small>
+                                    Add Schedule of Events
+                                </small>
+                            @else
+                                <small>
+                                    View Schedule of Events
+                                </small>
+                            @endif
+
+                            @if (Auth::user()->hasPermissions(['set_schedule_all']))
+                                <div id='calendar_admin' style="background:#fafafc;"></div>
+                            @else
+                                <div id='calendar_partTime' style="background:#fafafc;"></div>
+                            @endif
                         </div>
                     </div>
                 </div>
                 
+                @if (Auth::user()->hasPermissions(['add_event']))
                 <!-- Event Title Modal -->
                 <div class="modal fade" id="titleModal" role="dialog">
                     <div class="modal-dialog">
@@ -49,7 +62,9 @@
                         </div>        
                     </div>
                 </div>
-
+                @endif
+                
+                @if (Auth::user()->hasPermissions(['delete_event']))
                 <!-- Confirm Delete Modal -->
                 <div class="modal fade" id="deleteModal" role="dialog">
                     <div class="modal-dialog">
@@ -69,7 +84,9 @@
                         </div>        
                     </div>
                 </div>
-
+                @endif
+                
+                @if (Auth::user()->hasPermissions(['edit_event']))
                 <!-- Edit Event -->
                 <div class="modal fade" id="editModal" role="dialog">
                     <div class="modal-dialog">
@@ -94,6 +111,7 @@
                         </div>        
                     </div>
                 </div>
+                @endif
     </div>
 @endsection
 @section('scripts')

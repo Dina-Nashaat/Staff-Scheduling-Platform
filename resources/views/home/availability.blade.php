@@ -60,8 +60,8 @@
 						end: end,
 					};
                     var Date = $.fullCalendar.formatDate(eventData.start, 'YYYY-MM-D');
-                    var startTime = $.fullCalendar.formatDate(eventData.start, 'hh:mm:ss');
-                    var endTime = $.fullCalendar.formatDate(eventData.end, 'hh:mm:ss');
+                    var startTime = $.fullCalendar.formatDate(eventData.start, 'HH:mm:ss');
+                    var endTime = $.fullCalendar.formatDate(eventData.end, 'HH:mm:ss');
                     var userId = {{Auth::user()->id}};
                     $.ajax({
                         url: 'availability/post',
@@ -82,8 +82,8 @@
         
         eventDrop: function(event, delta) {
         var Date = $.fullCalendar.formatDate(event.start, 'YYYY-MM-D');
-        var startTime = $.fullCalendar.formatDate(event.start, 'hh:mm:ss');
-        var endTime = $.fullCalendar.formatDate(event.end, 'hh:mm:ss');
+        var startTime = $.fullCalendar.formatDate(event.start, 'HH:mm:ss');
+        var endTime = $.fullCalendar.formatDate(event.end, 'HH:mm:ss');
 
         $.ajax({
                 url: 'availability/update',
@@ -99,8 +99,8 @@
         
         eventResize: function(event) {
         var Date = $.fullCalendar.formatDate(event.start, 'YYYY-MM-D');
-        var startTime = $.fullCalendar.formatDate(event.start, 'hh:mm:ss');
-        var endTime = $.fullCalendar.formatDate(event.end, 'hh:mm:ss');
+        var startTime = $.fullCalendar.formatDate(event.start, 'HH:mm:ss');
+        var endTime = $.fullCalendar.formatDate(event.end, 'HH:mm:ss');
 
            $.ajax({
                 url: 'availability/update',

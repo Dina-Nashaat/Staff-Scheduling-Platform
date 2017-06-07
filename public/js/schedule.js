@@ -8,7 +8,12 @@ function generateColors(colorIdTag) {
     colors = ['#B71C1C', '#880E4F', '#4A148C', '#311B92', '#E65100', '#212121', '#0D47A1', '#FF6F00'];
     $(colorIdTag).append('Event Color : ');
     $.each(colors, function (i, color) {
-        var span = $('<a><span id = "color" name = "' + color + '" style = "padding-left:15px; margin-left: 2px;margin-right: 3px;font-size:14px; background-color:' + color + '">&nbsp;</span></a>');
+        var span = $('<a><span id = "color" name = "' + color + '"' +
+        'style = "display:inline-block; height:20px; width:20px;' +
+        'margin-left: 2px; margin-right:3px; font-size:14px; ' + 'padding-left: 3px; padding-top:5px;' +
+        'background-color:' + color + '">' + 
+        '<i class="" style = "font-size:15px; color:white; opacity:0.5;">' +
+        '</i></span></a>');
         $(colorIdTag).append(span);
     });
 }
@@ -22,8 +27,8 @@ function getAssignees(startEv, endEv) {
         color: color,
     };
     var Date = $.fullCalendar.formatDate(eventData.start, 'YYYY-MM-D');
-    var startTime = $.fullCalendar.formatDate(eventData.start, 'hh:mm:ss');
-    var endTime = $.fullCalendar.formatDate(eventData.end, 'hh:mm:ss');
+    var startTime = $.fullCalendar.formatDate(eventData.start, 'HH:mm:ss');
+    var endTime = $.fullCalendar.formatDate(eventData.end, 'HH:mm:ss');
     $.ajax({
         type: 'POST',
         url: '/availability/availableAtTime',
@@ -43,6 +48,27 @@ function getAssignees(startEv, endEv) {
 /** Assign a color to event on click */
 $(document.body).on('click', '#color', function getColor(event) {
     color = $(event.target).attr('name');
+    console.log($(event.target));
+    $('i').removeClass('material-icons');
+    $('i').html('');
+    $(event.target).children("i").toggleClass('material-icons');
+    if ($(event.target).children().hasClass("material-icons")) {
+            $(event.target).children().html("check");
+    } else {
+            $(event.target).children().html("");
+    }
+    console.log(color);
+});
+
+$(document.body).on('click', 'i', function getColor(event) {
+    color = undefined;
+    $(event.target).toggleClass('material-icons');
+    if ($(event.target).hasClass("material-icons")) {
+            $(event.target).html("check");
+    } else {
+            $(event.target).html("");
+    }
+    console.log(color);
 });
 
 /** Save changes on Enter Key in Add Event Modal */
@@ -60,7 +86,7 @@ $("#delete_btn").click(function () {
         type: "POST",
         dataType: "json",
         success: function (output) {
-            $('#calendar').fullCalendar('removeEvents', eventId);
+            $('#calendar_admin').fullCalendar('removeEvents', eventId);
             //console.log('Deleted Successfully');
         }
     });
@@ -78,8 +104,8 @@ $("#save_btn").click(function () {
             color: color,
         };
         var Date = $.fullCalendar.formatDate(eventData.start, 'YYYY-MM-D');
-        var startTime = $.fullCalendar.formatDate(eventData.start, 'hh:mm:ss');
-        var endTime = $.fullCalendar.formatDate(eventData.end, 'hh:mm:ss');
+        var startTime = $.fullCalendar.formatDate(eventData.start, 'HH:mm:ss');
+        var endTime = $.fullCalendar.formatDate(eventData.end, 'HH:mm:ss');
         selected = $('.selectpicker').val();
     }; //else AN ERROR OCCURS
 
@@ -94,8 +120,9 @@ $("#save_btn").click(function () {
         dataType: "json",
         success: function (output) {
             eventData.id = output;
-            $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-            $('#calendar').fullCalendar('unselect');
+            $('#calendar_admin').fullCalendar('renderEvent', eventData, true); // stick? = true
+            $('#calendar_partTime').fullCalendar('renderEvent', eventData, true); // stick? = true
+            $('#calendar_admin').fullCalendar('unselect');
         }
     });
 
@@ -132,9 +159,10 @@ $("#update_btn").click(function(e){
             eventID = output['id']
             eventData.color = output['event_color'];
             eventData.id = eventID;
-            $('#calendar').fullCalendar( 'removeEvents', [eventID] );
-            $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-            $('#calendar').fullCalendar('unselect');
+            $('#calendar_admin').fullCalendar( 'removeEvents', [eventID] );
+            $('#calendar_admin').fullCalendar('renderEvent', eventData, true); // stick? = true
+            $('#calendar_partTime').fullCalendar('renderEvent', eventData, true); // stick? = true
+            $('#calendar_admin').fullCalendar('unselect');
         }
     });
     //Hide Modal
@@ -176,10 +204,13 @@ $('#editModal').on('hidden.bs.modal', function () {
 $(document).ready(function () {
 
     // page is now ready, initialize the calendar...
-    $('#calendar').fullCalendar({
+    $('#calendar_admin').fullCalendar({
 
         eventRender: function (event, element) {
-            element.prepend('<span style = "margin-right: 5px; z-index:90;" class="removeEvent glyphicon glyphicon-trash pull-left" id="Delete"></span>');
+            element.prepend(
+                '<span style = "margin-right: 5px; z-index:90;" ' +
+                'class="removeEvent glyphicon glyphicon-trash pull-left"' +
+                'id="Delete"></span>');
         },
 
         header: { center: 'month,agendaWeek,agendaDay' },
@@ -206,8 +237,8 @@ $(document).ready(function () {
         eventDrop: function (event, delta) {
             selected = $('#editSelector').val();
             var Date = $.fullCalendar.formatDate(event.start, 'YYYY-MM-D');
-            var startTime = $.fullCalendar.formatDate(event.start, 'hh:mm:ss');
-            var endTime = $.fullCalendar.formatDate(event.end, 'hh:mm:ss');
+            var startTime = $.fullCalendar.formatDate(event.start, 'HH:mm:ss');
+            var endTime = $.fullCalendar.formatDate(event.end, 'HH:mm:ss');
             $.ajax({
                 url: 'schedule/update',
                 data: 'title=' + event.title + '&start_time=' + startTime + 
@@ -227,8 +258,8 @@ $(document).ready(function () {
         eventResize: function (event) {
             selected = $('#editSelector').val();
             var Date = $.fullCalendar.formatDate(event.start, 'YYYY-MM-D');
-            var startTime = $.fullCalendar.formatDate(event.start, 'hh:mm:ss');
-            var endTime = $.fullCalendar.formatDate(event.end, 'hh:mm:ss');
+            var startTime = $.fullCalendar.formatDate(event.start, 'HH:mm:ss');
+            var endTime = $.fullCalendar.formatDate(event.end, 'HH:mm:ss');
 
             $.ajax({
                 url: 'schedule/update',
@@ -250,10 +281,10 @@ $(document).ready(function () {
             eventId = calEvent.id;
             title = calEvent.title;
             startEvent = $.fullCalendar.formatDate(calEvent.start, 'D-MM-YYYY');
-            endEvent = $.fullCalendar.formatDate(calEvent.start, 'hh:mm');
+            endEvent = $.fullCalendar.formatDate(calEvent.start, 'HH:mm');
             data = title + " on " + startEvent +
                 " from " +  endEvent +
-                " to " + $.fullCalendar.formatDate(calEvent.end, 'hh:mm');
+                " to " + $.fullCalendar.formatDate(calEvent.end, 'HH:mm');
 
             if (jsEvent.target.id === 'Delete') {
                 $("#event_delete").html(data);
@@ -273,6 +304,9 @@ $(document).ready(function () {
                         $(document).ajaxComplete(function(){
                             $('#edit_event_title').val(title);
                             color = calEvent.color;
+                            $('i').removeClass('material-icons').html('');
+                            $("[name*='"+color+"']").children("i").addClass('material-icons').html("check");
+                            console.log(color);
                             $('.selectpicker').selectpicker();
                             $('.selectpicker').selectpicker('val',assigned);
                         });
@@ -281,4 +315,25 @@ $(document).ready(function () {
             }
         },
     });
+
+    $('#calendar_partTime').fullCalendar({
+        
+        header: { center: 'month,agendaWeek,agendaDay' },
+        defaultView: 'agendaWeek',
+        weekends: false,
+        minTime: "06:00:00",
+        maxTime: "22:00:00",
+        scrollTime: "22:00:00",
+        allDaySlot: false,
+        allDay:true,
+        contentHeight: "auto",
+        editable: false,
+        selectable: false,
+        events: '/schedule/fetch',
+    });
+
+
+
+
+
 });
