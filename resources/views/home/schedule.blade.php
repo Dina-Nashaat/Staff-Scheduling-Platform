@@ -51,7 +51,8 @@
                             <div class="modal-body">
                                 <input id="event_title" class="form-control">
                                 <div style="padding-top:10px;  margin-bottom:10px;" id="colorPicker"></div>
-                                <select class="selectpicker" multiple>
+                                <select class="selectpicker" multiple data-actions-box="true">
+
                                 </select>
 
                             </div>
@@ -99,8 +100,7 @@
                             <div class="modal-body">
                                 <input id="edit_event_title" class="form-control">
                                 <div style="padding-top:10px; margin-bottom:10px;" id="colorPicker2"></div>
-                                <select  class="selectpicker" id = "editSelector" multiple>
-                                        
+                                <select  class="selectpicker" id = "editSelector"  multiple data-actions-box="true">
                                 </select>
 
                             </div>

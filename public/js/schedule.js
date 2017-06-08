@@ -38,7 +38,12 @@ function getAssignees(startEv, endEv) {
             var users = [];
             $.each(availabilities, function (i, availability) {
                 $('.selectpicker').append('<option value =' + availability.user.id +
-                    '>' + availability.user.firstname + '</option>')
+                    ' data-subtext="' + ' | '+
+                    (availability.start_time).substr(0,5) + ' - ' +
+                    (availability.end_time).substr(0,5) +
+                    '">' + availability.user.firstname + '  ' +
+                    (availability.user.lastname).substr(0,1) +
+                    '</option>');
                 $('.selectpicker').selectpicker('refresh');
             });            
         }

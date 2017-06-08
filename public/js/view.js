@@ -58,7 +58,7 @@ $(function () {
                     $.each(events, function (i, event) {
                         var liAnchor = $("<a></a>");
                         var hiddenID = $("<input type=\"hidden\" id=eventID" + index + " value=" + event.id + ">");
-                        liAnchor.append(event.eventName);
+                        liAnchor.append(event.event_name);
                         var list = $("<li></li>").append(hiddenID);
                         $(ul).append(list.append(liAnchor));
                     });
@@ -98,7 +98,9 @@ $(document.body).on('click', 'li>a', function (event) {
     });
 
 });
+
 var selEl = [];
+
 $(document.body).on('click', '#assign', function (event) {
     userID = $(event.target).parent().parent().children('input').val();
     //Get Button from where a stands

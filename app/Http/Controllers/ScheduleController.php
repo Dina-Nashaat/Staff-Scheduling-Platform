@@ -96,6 +96,15 @@ class ScheduleController extends Controller
         return $duplicate;
     }
 
+    function assign()
+    {
+        $input = Request::all();
+        $eventId = $input['eventID'];
+        $userId = $input['userID'];
+        $schedule = Schedule::find($eventId);
+        return self::assignYLA([(int)$userId],$schedule);
+        
+    }
 
     function checkIfUserScheduled(){
         $input = Request::all();
