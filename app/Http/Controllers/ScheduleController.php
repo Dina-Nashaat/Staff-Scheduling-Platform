@@ -92,7 +92,7 @@ class ScheduleController extends Controller
     function assignYLA($users,$schedule)
     {
         $duplicate = 0;
-        $schedule->users()->sync($users);
+        $schedule->users()->toggle($users);
         return $duplicate;
     }
 
@@ -102,8 +102,7 @@ class ScheduleController extends Controller
         $eventId = $input['eventID'];
         $userId = $input['userID'];
         $schedule = Schedule::find($eventId);
-        return self::assignYLA([(int)$userId],$schedule);
-        
+        return self::assignYLA([(int)$userId],$schedule);   
     }
 
     function checkIfUserScheduled(){

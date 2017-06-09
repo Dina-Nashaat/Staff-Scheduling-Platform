@@ -93,7 +93,7 @@ $(document.body).on('click', 'li>a', function (event) {
         dataType: 'json',
         success: function (exists) {
             if (exists)
-                $(event.target).parent().parent().parent().parent().siblings('td').find('a').text("Withdraw");
+                $(event.target).parent().parent().parent().parent().siblings('td').find('a').text("Withdraw").attr('id','withdraw');
         }
     });
 
@@ -118,12 +118,31 @@ $(document.body).on('click', '#assign', function (event) {
                 console.log("It's a duplicate. No one is assigned.'");
             }
             else {
-                console.log("Addedd Successfully");
+                console.log("Added Successfully");
                 $(event.target).html('Widthdraw');
                 $(event.target).attr('id', 'withdraw');
             }
         }
     });
 
+
+});
+
+$(document.body).on('click','#withdraw',function(event){
+    userID = $(event.target).parent().parent().children('input').val();
+    //Get Button from where a stands
+    eventID = $(this).parent().siblings("#eventDropdown").children('.dropdown').children('button').attr('id');
+
+     $.ajax({
+        url: '/schedule/assign',
+        type: 'POST',
+        data: 'eventID=' + eventID + "&userID=" + userID,
+        dataType: "json",
+        success: function (duplicate) {
+            console.log("Withdrawn Successfully");
+            $(event.target).html('Assign');
+            $(event.target).attr('id', 'assign');
+        }
+    });
 
 });
