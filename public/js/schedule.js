@@ -216,6 +216,14 @@ $(document).ready(function () {
                 '<span style = "margin-right: 5px; z-index:90;" ' +
                 'class="removeEvent glyphicon glyphicon-trash pull-left"' +
                 'id="Delete"></span>');
+                console.log((event.assigned).length);
+            if(event.assigned.length!=0){
+                element.append('<br><b><u>Assigned:</b></u> <br>')
+                $.each(event.assigned,function(index,person){
+                    element.append(person + "<br>");
+                });
+            }
+            
         },
 
         header: { center: 'month,agendaWeek,agendaDay' },

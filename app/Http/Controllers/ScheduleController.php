@@ -49,6 +49,7 @@ class ScheduleController extends Controller
         $data = [];
         foreach($query as $q)
         {
+            $assigned = Schedule::find($q->id)->users()->pluck('firstname');
             $date = $q->event_date;
             $start = $date.' '.$q->start_time;
             $end = $date.' '.$q->end_time;
@@ -59,7 +60,8 @@ class ScheduleController extends Controller
                             'end' =>$end,
                             'title' => $title,
                             'color' => $color,
-                            'id'=>$id);
+                            'id'=>$id,
+                            'assigned'=>$assigned);
         }
         return json_encode($data);
     }
