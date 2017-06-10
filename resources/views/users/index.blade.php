@@ -32,6 +32,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                        
                         @foreach($users as $user)
                             <tr @if( Auth::user() == $user ) style='background:#337ab7;color:white;' @endif >
                                 <td>{{ $user->firstname }} {{ $user->lastname }}</td>
@@ -39,7 +40,10 @@
                                 <td style="text-align:center;">{{ $user->role->role_name}}</td>
                                 <td></td>
                                 <td style="text-align:center;">{{ $user->state }}</td>
-                                <td style="text-align:right;"><a @if(Auth::user()->email == $user->email) style='color:white;' @endif>Edit</a></td>
+                                <td style="text-align:right;">
+                                    <a href="{{ route('users.edit',$user->id) }}"
+                                     @if(Auth::user()->email == $user->email) style='color:white;' @endif>Edit</a>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>

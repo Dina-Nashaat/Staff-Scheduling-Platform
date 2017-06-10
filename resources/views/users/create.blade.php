@@ -18,13 +18,16 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label >First Name</label>
-                                    <input type="text" name="firstname" class="form-control" placeholder="first name" value="{{ old('firstname') }}">
+                                    <input type="text" name="firstname" class="form-control"
+                                     placeholder="First Name" 
+                                     value="@if(isset($user->firstname)){{$user->firstname}}@else{{old('firstname')}}@endif">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Last Name</label>
-                                    <input type="text" name="lastname" class="form-control" placeholder="last name" value="{{ old('lastname') }}">
+                                    <input type="text" name="lastname" class="form-control" placeholder="last name" 
+                                    value="@if(isset($user->lastname)){{$user->lastname}}@else{{old('lastname')}}@endif">
                                 </div>
                             </div>
                         </div>
@@ -32,16 +35,19 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input type="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}">
+                                    <input type="email" name="email" class="form-control" placeholder="Email" 
+                                    value="@if(isset($user->email)){{$user->email}}@else{{old('email')}}@endif">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Birthdate</label>
-                                    <input type="date" name="birthdate" class="form-control" placeholder="Birthdate" value="{{ old('birthdate') }}">
+                                    <input type="date" name="birthdate" class="form-control" placeholder="Birthdate"
+                                     value="@if(isset($user->birthdate)){{$user->birthdate}}@else{{old('birthdate')}}@endif">
                                 </div>
                             </div>
                         </div>
+                        @if(!isset($user->id))
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -56,8 +62,9 @@
                                 </div>
                             </div>
                         </div>
-                            <button type="submit" class="btn btn-primary">Create</button>
-          
+                        @endif
+                            <button type="submit" class="btn btn-primary">@if(!isset($user->id)) Create @else Save @endif </button>
+                            <input type="hidden" name = "user_id" value="@if(!isset($user->id)) {{0}} @else {{$user->id}} @endif">
                 </div>
             </form>
         </div>

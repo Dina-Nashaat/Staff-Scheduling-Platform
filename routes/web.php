@@ -190,7 +190,13 @@ Route::group(['middleware' => 'auth'], function() {
 		'middleware' => 'permissions',
 		'permissions' => ['add_user'],
 	]);
-	
 
+	Route::get('/users/edit/{userId}', [
+		'as' => 'users.edit',
+		'uses' => 'UsersController@edit',
+		'middleware' => 'permissions',
+		'permissions' => ['edit_user'],
+	]);
+	
 	Route::get('/minor', 'HomeController@minor')->name("minor");
 });
