@@ -41,12 +41,21 @@ class UsersTableSeeder extends Seeder
 	        'email' => 'john.adams@gmail.com',
 	        'password' => bcrypt('12345678'),
 	        'center_id' => '1',
+	        'state' => 'active',],
+			[	
+        	'firstname' => 'Guest',
+	        'lastname' => 'Guest',
+	        'birthdate' => Carbon::now(),
+	        'email' => 'guest.guest@gmail.com',
+	        'password' => bcrypt('12345678'),
+	        'center_id' => '1',
 	        'state' => 'active',]
-
         ];
+
+		 $role_ids = [1, 2, 3, 1];
          foreach($users as $key=>$user){
             $user_c = User::create($user);
-            $role = App\Role::where('id',$key+1)->first();
+            $role = App\Role::where('id',$roles[$key])->first();
             $role->users()->save($user_c);
         }
     }
