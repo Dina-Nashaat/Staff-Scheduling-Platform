@@ -55,7 +55,7 @@ class UsersTableSeeder extends Seeder
 		 $role_ids = [1, 2, 3, 1];
          foreach($users as $key=>$user){
             $user_c = User::create($user);
-            $role = App\Role::where('id',$roles[$key])->first();
+            $role = App\Role::where('id',$role_ids[$key])->first();
             $role->users()->save($user_c);
         }
     }
